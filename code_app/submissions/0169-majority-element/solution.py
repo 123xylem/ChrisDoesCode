@@ -5,7 +5,6 @@ class Solution(object):
         :rtype: int
         """
         half = len(nums)//2
-        nums = sorted(nums)
         tracker = {}
         for i in range(len(nums)):
             tracker[nums[i]] = tracker.get(nums[i], 0) +1
