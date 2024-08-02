@@ -23,7 +23,7 @@
     {% block nav-global %}{% endblock %}
     <!-- ABOUT SECTION =========
      ========================-->
-    {% if content %}<div class="skill-section">{{ content }}</div>{% endif %}
+    {% if context %}<div class="skill-section">{{ context['content_list'] }}</div>{% endif %}
     {% if latest_question_list %}
       <!-- SKILL SECTION =========
      ========================-->

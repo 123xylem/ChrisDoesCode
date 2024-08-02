@@ -32,10 +32,11 @@ class SkillInline(admin.TabularInline):
 
 
 class SkillAdmin(admin.ModelAdmin):
-  list_display = ["skill_title", "skill_proof",  "img"]
-  search_fields = ["skill_title"]
+  list_display = ["title",  "image_preview"]
+  search_fields = ["title"]
+  readonly_fields = ['image_preview']
   fieldsets = [
-    (None, {"fields": ["skill_title", "skill_proof",  "img"]})
+    (None, {"fields": ["title", "img", "image_preview"]})
   ]
   inlines = [ProjectInline]
   inlines = [SkillInline]
@@ -44,18 +45,20 @@ admin.site.register(Skill, SkillAdmin)
 
 
 class ProjectAdmin(admin.ModelAdmin):
-  list_display = ["title", "description", "link",  "img"]
+  list_display = ["title", "link", "image_preview"]
+  readonly_fields = ['image_preview']
   fieldsets = [
-    (None, {"fields": ["title", "description", "link",  "img"]})
+    (None, {"fields": ["title", "description", "link",  "img", "image_preview"]})
   ]
 
 admin.site.register(Project, ProjectAdmin)
 
 
 class ContentAdmin(admin.ModelAdmin):
-  list_display = ["content",  "img", "custom_class"]
+  list_display = ["content",  "image_preview", "custom_class"]
+  readonly_fields = ['image_preview']
   fieldsets = [
-    (None, {"fields": ["content",  "img", "custom_class"]})
+    (None, {"fields": ["content",  "img", "image_preview", "custom_class"]})
   ]
 
 admin.site.register(Content, ContentAdmin)

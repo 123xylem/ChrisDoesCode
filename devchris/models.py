@@ -1,42 +1,41 @@
 import datetime
-from django import forms
 from django.db import models
-from django.utils import timezone
-from django.contrib import admin
+from datetime import datetime
+from django.utils.safestring import mark_safe
+
+def get_upload_path(instance, filename):
+    return 'static/images/{}/{}'.format(datetime.now().strftime('%Y/%m'), filename)
+
+class ImageMixinClass():
+  def image_preview(self):
+    return mark_safe('<img src="%s" width="150" height="150" />' % (self.img.url))
+  image_preview.allow_tags = True
+  image_preview.short_description = 'Preview'
+
+class titleMixinClass():
+    def __str__(self):
+      return self.title
+
+
 
 # Text UL Image - for HomePage skills
-class Skill(models.Model):
-    skill_title = models.CharField(max_length=300)
-    img = models.ImageField(upload_to ='static/images/% Y/% m/')
-    skill_proof = models.CharField(max_length=600, null=True, blank=True)
-
-    def __str__(self):
-      return self.skill_title
-
-
-    #Set Admin Display preferences
-    # @admin.display(
-    #     boolean=True,
-    #     ordering="pub_date",
-    #     description="Published recently?",
-    # )
-    
-
+class Skill(models.Model, ImageMixinClass, titleMixinClass):
+    title = models.CharField(max_length=300, default="title")
+    img = models.ImageField(upload_to=get_upload_path)
+        
  # TEXT IMAGE LINK - FOr: homepageProjects
-class Project(models.Model):
+class Project(models.Model, ImageMixinClass, titleMixinClass):
     description = models.TextField()
     title = models.CharField(max_length=300, default='Project Title')
     link = models.CharField(max_length=300, null=True, blank=True)
-    img = models.ImageField(upload_to ='static/images/{% Y/% m/}')
+    img = models.ImageField(upload_to=get_upload_path)
     related_skill = models.ForeignKey(Skill, on_delete=models.CASCADE, null=True, blank=True)
-    def __str__(self):
-        return self.title
-
 
 # // TEXT/ IMAGES - For: About Me - Testimonials
-class Content(models.Model):
+class Content(models.Model, ImageMixinClass, titleMixinClass):
+  title = models.CharField(max_length=250, default="title")
   content = models.TextField()
-  img = models.ImageField(upload_to ='static/images/% Y/% m/', null=True, blank=True)
+  img = models.ImageField(upload_to=get_upload_path, null=True, blank=True)
   custom_class = models.CharField(max_length=300, null=True, blank=True)
 
 class SkillProof(models.Model):

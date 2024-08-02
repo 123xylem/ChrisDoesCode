@@ -16,7 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
+from django.conf.urls.static import static
+from django.conf import settings
 from . import views
 
 urlpatterns = [
@@ -29,18 +30,19 @@ urlpatterns = [
 
 ]
 
-
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 #TODO://
 #Image field relates to local images when choosing on admin side
 # Make Fields better layed out
 # Check field functionality
-
+# Link Content model to different pages?
 # HTML markup of Home page
 # HTML markup of About page
 # HTML markup of Courses page
 # HTML markup of CV page
 
-
+#DONE ----------- Show image preview on upload
+    #  ------------ Apply to all image fields ^
 
 
 
