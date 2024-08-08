@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 from devchris.models import *
+import json
 
 from django.views.generic import (
     TemplateView,
@@ -15,17 +16,15 @@ from django.views.generic import (
 )
 
 class index(TemplateView):
-      template_name = "index.html"
+    template_name = "index.html"
 
-      def get_content(self, content):
-        """Return the last five published questions."""
-        return HttpResponseRedirect(reverse("/", args=(content,)))
-
-      def get_context_data(self, **kwargs):    
+    def get_context_data(self, **kwargs):    
         context = super().get_context_data(**kwargs)
         context['skill_list'] = Skill.objects.all()
         context['project_list'] = Project.objects.all()
-        context['content_list'] = Content.objects.all()
+        context['content_list'] = Content.objects.filter(title='About Me')
+        context['testimonials'] = Content.objects.filter(title__startswith="Testimonial")
+        print(Content.objects.filter(title__startswith="Testimonial"))
         return context
 
 

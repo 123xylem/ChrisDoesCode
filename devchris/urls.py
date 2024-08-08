@@ -19,6 +19,7 @@ from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
 from . import views
+from debug_toolbar.toolbar import debug_toolbar_urls
 
 urlpatterns = [
     path("", views.index.as_view(), name="index"),
@@ -28,10 +29,15 @@ urlpatterns = [
     path("dashboard/", views.dashboard, name="dashboard"),
     path("admin/", admin.site.urls),
 
-]
+] + debug_toolbar_urls()
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
+
 #TODO://
+# Add debug toolbar for context debugging
 #Image field relates to local images when choosing on admin side
 # Make Fields better layed out
 # Check field functionality

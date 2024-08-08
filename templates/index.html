@@ -6,7 +6,6 @@
     <title>Chris does Code</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="">
   </head>
   <body class="homepage">
     {% extends "base.html" %}
@@ -21,54 +20,70 @@
       {% endif %}
     {% endblock %}
     {% block nav-global %}{% endblock %}
-    <!-- ABOUT SECTION =========
-     ========================-->
-    {% if context %}<div class="skill-section">{{ context['content_list'] }}</div>{% endif %}
-    {% if latest_question_list %}
+    {% block content %}
+      {% if content_list %}
+        <div class="aboutme section">
+          {% for content in content_list %}
+            <h1>{{ content.title }}</h1>
+            <div class="inner-content">
+              <div class="content-row with-img-right">
+                <p>{{ content.content }}</p>
+                {% if content.img %}<img class="thumbnail" src="{{ content.img.url }}" alt="About me">{% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <p>No contents available.</p>
+        </div>
+      {% endif %}
+      <!-- Project SECTION =========
+========================-->
+      {% if project_list %}
+        <div class="projects-section section">
+          <h2>Project List</h2>
+          <div class="project-grid grid-box">
+            {% for project in project_list %}
+              <div class="project grid-item">
+                <a href="{{ project.link }}">
+                  <h3>{{ project.title }}</h3>
+                </a>
+                <p class="project-description">{{ project.description }}</p>
+                <div class="related-skills">
+                  {% for skill in project.related_skills %}<p>{{ skill }}</p>{% endfor %}
+                </div>
+                <img class="img-small" src="{{ project.img.url }}" alt="">
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <p>No projects available.</p>
+        </div>
+      {% endif %}
       <!-- SKILL SECTION =========
      ========================-->
-      <div class="skill-section">
-        <ul>
-          {% for question in latest_question_list %}
-            <li>
-              <a href="/polls/{{ question.id }}/">{{ question.question_text }}</a>
-            </li>
-          {% endfor %}
-        </ul>
-      {% else %}
-        <p>No polls are available.</p>
-      </div>
-    {% endif %}
-    <!-- Project SECTION =========
+      {% if skill_list %}
+        <div class="skill-section section">
+          <h2>Skill List</h2>
+          <ul>
+            {% for skill in skill_list %}
+              <li>
+                {{ skill.title }} -
+                <img class="thumbnail img-small" src="{{ skill.img.url }}" alt="{{ skill.title }}"
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p>No skills available.</p>
+          </div>
+        {% endif %}
+        <!-- Tesimonial SECTION =========
 ========================-->
-    {% if latest_question_list %}
-      <div class="skill-section">
-        <ul>
-          {% for question in latest_question_list %}
-            <li>
-              <a href="/polls/{{ question.id }}/">{{ question.question_text }}</a>
-            </li>
-          {% endfor %}
-        </ul>
-      {% else %}
-        <p>No polls are available.</p>
-      </div>
-    {% endif %}
-    <!-- Tesimonial SECTION =========
-========================-->
-    {% if latest_question_list %}
-      <div class="skill-section">
-        <ul>
-          {% for question in latest_question_list %}
-            <li>
-              <a href="/polls/{{ question.id }}/">{{ question.question_text }}</a>
-            </li>
-          {% endfor %}
-        </ul>
-      {% else %}
-        <p>No polls are available.</p>
-      </div>
-    {% endif %}
-    <script src="" async defer></script>
-  </body>
-</html>
+        <div class="testimonial-section section">
+          <p class="stylised testimonial">
+            {% for testimonial in testimonials %}<p>{{ testimonial.content }}</p>{% endfor %}
+          </p>
+        </div>
+      {% endblock %}
+      <script src="" async defer></script>
+    </body>
+  </html>

@@ -8,7 +8,8 @@ def get_upload_path(instance, filename):
 
 class ImageMixinClass():
   def image_preview(self):
-    return mark_safe('<img src="%s" width="150" height="150" />' % (self.img.url))
+    if self.img and hasattr(self.img, 'url'):
+      return mark_safe('<img src="%s" width="150" height="150" />' % (self.img.url))
   image_preview.allow_tags = True
   image_preview.short_description = 'Preview'
 
@@ -19,17 +20,22 @@ class titleMixinClass():
 
 
 # Text UL Image - for HomePage skills
-class Skill(models.Model, ImageMixinClass, titleMixinClass):
+class Skill(ImageMixinClass, titleMixinClass, models.Model):
     title = models.CharField(max_length=300, default="title")
     img = models.ImageField(upload_to=get_upload_path)
-        
+    class Meta:
+      ordering = ["title"]
+
  # TEXT IMAGE LINK - FOr: homepageProjects
 class Project(models.Model, ImageMixinClass, titleMixinClass):
     description = models.TextField()
     title = models.CharField(max_length=300, default='Project Title')
     link = models.CharField(max_length=300, null=True, blank=True)
     img = models.ImageField(upload_to=get_upload_path)
-    related_skill = models.ForeignKey(Skill, on_delete=models.CASCADE, null=True, blank=True)
+    related_skill = models.ManyToManyField(Skill, blank=True)
+    # models.ManyToManyField(related_query_name='title')
+    # related_skill = models.ForeignKey(Skill, on_delete=models.CASCADE, null=True, blank=True)
+
 
 # // TEXT/ IMAGES - For: About Me - Testimonials
 class Content(models.Model, ImageMixinClass, titleMixinClass):
@@ -42,5 +48,3 @@ class SkillProof(models.Model):
   skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
   description = models.TextField()
 
-
-# q2 = Question(question_text="Chris's Question is are you good?", pub_date=timezone.now())

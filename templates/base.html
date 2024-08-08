@@ -4,11 +4,14 @@
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}"
       dir="{{ LANGUAGE_BIDI|yesno:'rtl,ltr,auto' }}">
   <head>
-    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+    <link rel="icon"
+          type="image/x-icon"
+          href="{% static 'favicon-32x32.png?v=a' %}">
     <title>
       {% block title %}{% endblock %}
     </title>
     <link rel="stylesheet" href="{% block stylesheet %}{% static "admin/css/base.css" %}{% endblock %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     {% block dark-mode-vars %}
       <link rel="stylesheet" href="{% static "admin/css/dark_mode.css" %}">
       <script src="{% static "admin/js/theme.js" %}"></script>

@@ -1,0 +1,37 @@
+.section {
+  border: 1px solid cyan;
+}
+
+.content-row {
+  display: flex;
+  max-width: 900px;
+}
+
+.with-img-right img {
+  max-width: 300px;
+  margin-left: 1rem;
+}
+
+.with-img-left img {
+  max-width: 300px;
+  margin-right: 1rem;
+}
+
+.thumbnail {
+  max-width: 300px;
+}
+
+.img-small {
+  max-width: 100px;
+}
+
+.img-tiny {
+  width: 50px;
+  border-radius: 100%;
+}
+
+@media (max-width: 500px) {
+  .content-row {
+    flex-direction: column;
+  }
+}
