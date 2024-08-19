@@ -1,26 +1,6 @@
-from .models import  Skill, Project, Content, SkillProof
+from .models import  Skill, Project, Content, SkillProof, Page
 from django.contrib import admin
-
-
-# class ChoiceInline(admin.TabularInline):
-#     model = Choice
-#     extra = 3
-
-
-# class QuestionAdmin(admin.ModelAdmin):
-#     list_display = ["question_text", "pub_date",  "was_published_recently"]
-#     list_filter = ["pub_date"]
-#     search_fields = ["question_text"]
-
-#     fieldsets = [
-#         (None, {"fields": ["question_text"]}),
-#         ("Date information", {"fields": ["pub_date"], "classes": ["collapse"]}),
-#     ]
-#     inlines = [ChoiceInline]
-
-
-# admin.site.register(Question, QuestionAdmin)
-
+from django.utils.text import slugify
 
 class ProjectInline(admin.TabularInline):
     model = Project
@@ -64,6 +44,15 @@ class ContentAdmin(admin.ModelAdmin):
 
 admin.site.register(Content, ContentAdmin)
 
+
+class PageAdmin(admin.ModelAdmin):
+  list_display = ["title", "slug"]
+
+  fieldsets = [
+    (None, {"fields": ["title", "slug", "is_published" ]})
+  ]
+
+admin.site.register(Page, PageAdmin)
 
 
 

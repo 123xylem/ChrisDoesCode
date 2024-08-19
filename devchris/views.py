@@ -29,18 +29,17 @@ class index(TemplateView):
 
 
 
-class about(TemplateView):
-      template_name = "about.html"
-      content = {
-          "title" : "Web Dev Chris",
-          "content" : "Web Dev Chris is amazing",
-      }
-      def get_content(self, content):
-        """Return the last five published questions."""
-        return HttpResponseRedirect(reverse("/", args=(content,)))
+def about(request):
+    context = {
+        'content_list': Content.objects.filter(title__startswith="About part")
+    }
+    return render(request, 'base.html', context)
       
 def cv(request):
-    return HttpResponse("Hello, world. You're at cv.")
+    context = {
+        'content_list': Content.objects.filter(title="CV")
+    }
+    return render(request, 'base.html', context)
 
 def dashboard(request):
     return HttpResponse("Hello, world. You're at dashboard.")
