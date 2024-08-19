@@ -24,7 +24,7 @@ class index(TemplateView):
         context['project_list'] = Project.objects.all()
         context['content_list'] = Content.objects.filter(title='About Me')
         context['testimonials'] = Content.objects.filter(title__startswith="Testimonial")
-        print(Content.objects.filter(title__startswith="Testimonial"))
+
         return context
 
 

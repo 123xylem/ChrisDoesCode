@@ -37,8 +37,7 @@ if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
 
 #TODO://
-# Add debug toolbar for context debugging
-#Image field relates to local images when choosing on admin side
+# Image field relates to local images when choosing on admin side
 # Make Fields better layed out
 # Check field functionality
 # Link Content model to different pages?
@@ -49,6 +48,7 @@ if settings.DEBUG:
 
 #DONE ----------- Show image preview on upload
     #  ------------ Apply to all image fields ^
+    # ------------- Debug tool bar
 
 
 

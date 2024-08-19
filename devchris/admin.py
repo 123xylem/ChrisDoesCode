@@ -43,7 +43,6 @@ class SkillAdmin(admin.ModelAdmin):
 
 admin.site.register(Skill, SkillAdmin)
 
-
 class ProjectAdmin(admin.ModelAdmin):
   list_display = ["title", "link", "image_preview"]
   readonly_fields = ['image_preview']

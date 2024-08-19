@@ -31,4 +31,4 @@ wheels/
 .installed.cfg 
 *.egg 
 *.manifest 
-*.spec 
+*.spec
