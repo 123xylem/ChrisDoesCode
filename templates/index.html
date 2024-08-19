@@ -22,7 +22,7 @@
     {% block nav-global %}{% endblock %}
     {% block content %}
       {% if content_list %}
-        <div class="aboutme section">
+        <div class="aboutme-section section">
           {% for content in content_list %}
             <h1>{{ content.title }}</h1>
             <div class="inner-content">
@@ -51,7 +51,9 @@
                 <div class="related-skills">
                   {% for skill in project.related_skills %}<p>{{ skill }}</p>{% endfor %}
                 </div>
-                <img class="img-small" src="{{ project.img.url }}" alt="">
+                <img class="project-thumbnail img-small"
+                     src="{{ project.img.url }}"
+                     alt="">
               </div>
             {% endfor %}
           </div>
@@ -68,22 +70,29 @@
             {% for skill in skill_list %}
               <li>
                 {{ skill.title }} -
-                <img class="thumbnail img-small" src="{{ skill.img.url }}" alt="{{ skill.title }}"
-                </li>
-              {% endfor %}
-            </ul>
-          {% else %}
-            <p>No skills available.</p>
-          </div>
-        {% endif %}
-        <!-- Tesimonial SECTION =========
-========================-->
-        <div class="testimonial-section section">
-          <p class="stylised testimonial">
-            {% for testimonial in testimonials %}<p>{{ testimonial.content }}</p>{% endfor %}
-          </p>
+                <img class="thumbnail img-small skill-icon-large"
+                     src="{{ skill.img.url }}"
+                     alt="{{ skill.title }}">
+                {% for proof in skill.skillproof.all %}
+                  <li>{{ proof.proof }}</li>
+                {% empty %}
+                  <li>No proofs available for this skill.</li>
+                {% endfor %}
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p>No skills available.</p>
         </div>
-      {% endblock %}
-      <script src="" async defer></script>
-    </body>
-  </html>
+      {% endif %}
+      <!-- Tesimonial SECTION =========
+========================-->
+      <div class="testimonial-section section">
+        <p class="stylised testimonial">
+          {% for testimonial in testimonials %}<p>{{ testimonial.content }}</p>{% endfor %}
+        </p>
+      </div>
+    {% endblock %}
+    <script src="" async defer></script>
+  </body>
+</html>

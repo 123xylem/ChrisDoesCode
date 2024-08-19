@@ -1,4 +1,4 @@
-.section {
+/* .section {
   border: 1px solid cyan;
 }
 
@@ -34,4 +34,110 @@
   .content-row {
     flex-direction: column;
   }
+} */
+
+/* Basic resets */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.section {
+  padding: 50px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* About Me Section */
+.aboutme-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.aboutme-text {
+  width: 60%;
+}
+
+.aboutme-image img {
+  width: 300px;
+  height: auto;
+  border-radius: 50%;
+}
+
+/* Project Section */
+.projects-section .project-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.project {
+  flex: 1 1 calc(33.333% - 20px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+.project-thumbnail {
+  width: 100%;
+  height: auto;
+}
+
+.skills-icons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.skill-icon {
+  width: 30px;
+  height: 30px;
+}
+
+/* Skills Section */
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.skill {
+  flex: 1 1 calc(50% - 20px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+.skill-icon-large {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 15px;
+}
+
+.skill ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  text-align: left;
+}
+
+/* Testimonial Section */
+.testimonial-section {
+  background-color: #eee;
+  padding: 50px;
+  text-align: center;
+}
+
+.testimonial {
+  font-style: italic;
+  margin-bottom: 20px;
+}
+
+.testimonial cite {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
 }

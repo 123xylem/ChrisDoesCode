@@ -65,6 +65,6 @@ class Content(models.Model, ImageMixinClass, titleMixinClass):
   custom_class = models.CharField(max_length=300, null=True, blank=True)
 
 class SkillProof(models.Model):
-  skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
+  skill = models.ForeignKey(Skill, on_delete=models.CASCADE, related_name='proofs')
   description = models.TextField()
 

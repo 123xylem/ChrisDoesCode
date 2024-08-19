@@ -31,4 +31,5 @@ wheels/
 .installed.cfg 
 *.egg 
 *.manifest 
-*.spec 
+*.spec
+__pycache__/

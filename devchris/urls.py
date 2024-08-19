@@ -48,7 +48,7 @@ if settings.DEBUG:
 
 #DONE ----------- Show image preview on upload
     #  ------------ Apply to all image fields ^
-    # --------- DEBug tool bar
+    # ------------- Debug tool bar
 
 
 
