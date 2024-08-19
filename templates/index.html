@@ -24,7 +24,7 @@
       {% if content_list %}
         <div class="aboutme-section section">
           {% for content in content_list %}
-            <h1>{{ content.title }}</h1>
+            <h2 class="site-heading">{{ content.title }}</h2>
             <div class="inner-content">
               <div class="content-row with-img-right">
                 <p>{{ content.content }}</p>
@@ -32,29 +32,31 @@
               </div>
             </div>
           {% endfor %}
-        {% else %}
-          <p>No contents available.</p>
         </div>
+      {% else %}
+        <p>No contents available.</p>
       {% endif %}
       <!-- Project SECTION =========
 ========================-->
       {% if project_list %}
         <div class="projects-section section">
-          <h2>Project List</h2>
+          <h2 class="site-heading">Project List</h2>
           <div class="project-grid grid-box">
             {% for project in project_list %}
-              <div class="project grid-item">
-                <a href="{{ project.link }}">
-                  <h3>{{ project.title }}</h3>
-                </a>
+              <a class="project grid-item" href="{{ project.link }}">
+                <h3>{{ project.title }}</h3>
                 <p class="project-description">{{ project.description }}</p>
                 <div class="related-skills">
-                  {% for skill in project.related_skills %}<p>{{ skill }}</p>{% endfor %}
+                  {% for skill in project.related_skill.all %}
+                    <p>{{ skill }}</p>
+                  {% empty %}
+                    <li>No skills used on this project.</li>
+                  {% endfor %}
                 </div>
                 <img class="project-thumbnail img-small"
                      src="{{ project.img.url }}"
                      alt="">
-              </div>
+              </a>
             {% endfor %}
           </div>
         {% else %}
@@ -65,22 +67,24 @@
      ========================-->
       {% if skill_list %}
         <div class="skill-section section">
-          <h2>Skill List</h2>
-          <ul>
+          <h2 class="site-heading">Skill List</h2>
+          <div class="skill-grid">
             {% for skill in skill_list %}
-              <li>
-                {{ skill.title }} -
+              <div class="skill-item">
+                <!-- <h3 class="skill-title">{{ skill.title }}</h3> -->
                 <img class="thumbnail img-small skill-icon-large"
                      src="{{ skill.img.url }}"
                      alt="{{ skill.title }}">
-                {% for proof in skill.skillproof.all %}
-                  <li>{{ proof.proof }}</li>
-                {% empty %}
-                  <li>No proofs available for this skill.</li>
+                <ul class="related-skills">
+                  {% for proof in skill.proofs.all %}
+                    <li>{{ proof.description }}</li>
+                  {% empty %}
+                    <li>No proofs available for this skill.</li>
+                  </ul>
                 {% endfor %}
-              </li>
+              </div>
             {% endfor %}
-          </ul>
+          </div>
         {% else %}
           <p>No skills available.</p>
         </div>
@@ -88,9 +92,8 @@
       <!-- Tesimonial SECTION =========
 ========================-->
       <div class="testimonial-section section">
-        <p class="stylised testimonial">
-          {% for testimonial in testimonials %}<p>{{ testimonial.content }}</p>{% endfor %}
-        </p>
+        <h2 class="">Testimonials</h2>
+        {% for testimonial in testimonials %}<p class="stylised testimonial">{{ testimonial.content }}</p>{% endfor %}
       </div>
     {% endblock %}
     <script src="" async defer></script>

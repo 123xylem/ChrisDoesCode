@@ -32,4 +32,3 @@ wheels/
 *.egg 
 *.manifest 
 *.spec
-__pycache__/

@@ -35,109 +35,201 @@
     flex-direction: column;
   }
 } */
-
-/* Basic resets */
+/* Global Styles */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  line-height: 1.6;
+  color: #333;
 }
 
+h1,
+h2,
+h3 {
+  color: #222;
+  text-align: center;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+.site-heading {
+  color: white;
+}
+
+/* Sections */
 .section {
   padding: 50px;
+  margin: 0 auto;
   max-width: 1200px;
-  margin: auto;
+}
+
+/* Branding */
+#site-name {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  padding: 20px;
+  background-color: #4caf50;
+  color: white;
+}
+
+.inner-content {
+  display: flex;
+  justify-content: center;
+}
+
+.content-row {
+  display: flex;
+  max-width: 900px;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.with-img-right img {
+  max-width: 300px;
+  margin-left: 1rem;
+}
+
+.with-img-left img {
+  max-width: 300px;
+  margin-right: 1rem;
 }
 
 /* About Me Section */
-.aboutme-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+
+.aboutme-section h1 {
+  flex: 1;
+  text-align: left;
 }
 
-.aboutme-text {
-  width: 60%;
-}
-
-.aboutme-image img {
-  width: 300px;
-  height: auto;
+.aboutme-section img {
+  max-width: 300px;
   border-radius: 50%;
+  margin-left: 20px;
 }
 
-/* Project Section */
+/* Projects Section */
 .projects-section .project-grid {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  justify-content: space-around;
 }
 
 .project {
-  flex: 1 1 calc(33.333% - 20px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  text-align: center;
+  flex: 1 1 calc(33% - 1rem);
   background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease; /* Smoother transition */
+  text-align: center;
+  text-decoration: none;
+  color: #222 !important;
+  border: 4px solid black;
 }
 
-.project-thumbnail {
+.project:hover {
+  border: 4px solid rgb(0 182 255);
+}
+
+.project img {
   width: 100%;
+  max-width: 300px;
   height: auto;
+  max-height: 150px;
+  border-radius: 10px;
 }
 
-.skills-icons {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-
-.skill-icon {
-  width: 30px;
-  height: 30px;
+.related-skills p {
+  display: inline-block;
+  background-color: #4caf50;
+  color: white;
+  padding: 5px 10px;
+  margin: 5px;
+  border-radius: 20px;
+  font-size: 0.9rem;
 }
 
 /* Skills Section */
-.skills-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.skill {
-  flex: 1 1 calc(50% - 20px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+.skill-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
   text-align: center;
-  background-color: #f9f9f9;
 }
 
+.skill-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.skill-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-basis: calc(33.3333% - 2rem);
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 10px;
+  margin: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+ul.related-skills li {
+  text-align: center;
+  list-style-type: none;
+}
 .skill-icon-large {
   width: 80px;
-  height: 80px;
-  margin-bottom: 15px;
-}
-
-.skill ul {
-  list-style-type: disc;
-  padding-left: 20px;
-  text-align: left;
+  height: auto;
+  max-height: 71px;
+  margin-bottom: 10px;
 }
 
 /* Testimonial Section */
 .testimonial-section {
-  background-color: #eee;
+  background-color: #f0f0f0;
   padding: 50px;
   text-align: center;
 }
 
 .testimonial {
   font-style: italic;
-  margin-bottom: 20px;
+  font-size: 1.2rem;
 }
 
-.testimonial cite {
-  display: block;
-  margin-top: 10px;
-  font-weight: bold;
+.testimonial p {
+  display: inline-block;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .aboutme-section {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .aboutme-section img {
+    margin: 20px 0 0 0;
+  }
+
+  .project {
+    flex: 1 1 100%;
+  }
 }
