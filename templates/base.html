@@ -43,9 +43,6 @@
         <!-- Header -->
         {% block header %}
           <header id="header">
-            <div id="branding">
-              {% block branding %}{% endblock %}
-            </div>
             {% block usertools %}
               {% if has_permission %}
                 <div id="user-tools">
@@ -79,15 +76,35 @@
           </header>
         {% endblock %}
         <!-- END Header -->
-        {% block nav-breadcrumbs %}
-          <nav aria-label="{% translate 'Breadcrumbs' %}">
-            {% block breadcrumbs %}
-              <div class="breadcrumbs">
-                <a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>
-                {% if title %}&rsaquo; {{ title }}{% endif %}
-              </div>
-            {% endblock %}
-          </nav>
+        {% block chris-nav %}
+          <div class="chris-nav">
+            <div id="site-name">Chris does Code</div>
+            {% if user.is_anonymous %}
+              {% include "admin/color_theme_toggle.html" %}
+            {% endif %}
+            <nav aria-label="{% translate 'Breadcrumbs' %}">
+              {% block breadcrumbs %}
+                <div class="breadcrumbs">
+                  <!-- {% if title %}&rsaquo; {{ title }}{% endif %} -->
+                  <ul class="main-nav">
+                    {% if user.is_authenticated %}
+                      <li>
+                        <a href="{% url 'admin:index' %}">{% translate 'Dashboard' %}</a>
+                      </li>
+                    {% endif %}
+                    <li>
+                      <a href="/">{% translate 'Home' %}</a>
+                    </li>
+                    {% for page in published_pages %}
+                      <li>
+                        <a href="{{ page.get_absolute_url }}">{{ page.title }}</a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% endblock %}
+            </nav>
+          </div>
         {% endblock %}
       {% endif %}
       <div class="main" id="main">
@@ -120,6 +137,15 @@
               {{ content }}
             {% endblock %}
             {% block sidebar %}{% endblock %}
+            {% if content_list %}
+              {% for content in content_list %}
+                {% if content.title %}<h2 class="site-heading">{{ content.title }}</h2>{% endif %}
+                <div class="content-section {% if content.img %}with-img{% endif %} ">
+                  {{ content.content }}
+                  {% if content.img %}<img src="{{ content.img.url }}" class="content-img">{% endif %}
+                </div>
+              {% endfor %}
+            {% endif %}
             <br class="clear">
           </div>
           <!-- END Content -->

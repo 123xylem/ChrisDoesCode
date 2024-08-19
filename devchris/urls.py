@@ -1,19 +1,3 @@
-"""
-URL configuration for devchris project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls.static import static
@@ -25,7 +9,7 @@ urlpatterns = [
     path("", views.index.as_view(), name="index"),
     path("cv/", views.cv, name="cv"),
     path("courses/", views.courses, name="courses"),
-    path("about/", views.about.as_view(), name="about"),
+    path("about/", views.about, name="about"),
     path("dashboard/", views.dashboard, name="dashboard"),
     path("admin/", admin.site.urls),
 
@@ -41,14 +25,16 @@ if settings.DEBUG:
 # Make Fields better layed out
 # Check field functionality
 # Link Content model to different pages?
-# HTML markup of Home page
 # HTML markup of About page
 # HTML markup of Courses page
 # HTML markup of CV page
+# Add tiny MCE for CV pip install django-tinymce
 
 #DONE ----------- Show image preview on upload
     #  ------------ Apply to all image fields ^
     # ------------- Debug tool bar
+    # ------------- # HTML markup of Home page
+
 
 
 

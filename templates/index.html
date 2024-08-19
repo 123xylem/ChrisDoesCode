@@ -9,17 +9,10 @@
   </head>
   <body class="homepage">
     {% extends "base.html" %}
-    {% block title %}
+    <!-- {% block title %}
       {% if subtitle %}{{ subtitle }} |{% endif %}
       {{ title }} | {{ site_title|default:_("Django site admin") }}
-    {% endblock %}
-    {% block branding %}
-      <div id="site-name">Chris does Code</div>
-      {% if user.is_anonymous %}
-        {% include "admin/color_theme_toggle.html" %}
-      {% endif %}
-    {% endblock %}
-    {% block nav-global %}{% endblock %}
+    {% endblock %} -->
     {% block content %}
       {% if content_list %}
         <div class="aboutme-section section">
