@@ -6,9 +6,9 @@
   <head>
     <link rel="icon"
           type="image/x-icon"
-          href="{% static 'favicon-32x32.png?v=a' %}">
+          href="{% static 'favicon-32x32.png' %}">
     <title>
-      {% block title %}{% endblock %}
+      {% block title %}Chris Does Code{% endblock %}
     </title>
     <link rel="stylesheet" href="{% block stylesheet %}{% static "admin/css/base.css" %}{% endblock %}">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
@@ -138,13 +138,9 @@
             {% endblock %}
             {% block sidebar %}{% endblock %}
             {% if content_list %}
-              {% for content in content_list %}
-                {% if content.title %}<h2 class="site-heading">{{ content.title }}</h2>{% endif %}
-                <div class="content-section {% if content.img %}with-img{% endif %} ">
-                  {{ content.content }}
-                  {% if content.img %}<img src="{{ content.img.url }}" class="content-img">{% endif %}
-                </div>
-              {% endfor %}
+              {% block custom_content_block %}
+                {% include "base_custom_content.html" %}
+              {% endblock %}
             {% endif %}
             <br class="clear">
           </div>

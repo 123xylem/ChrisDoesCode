@@ -9,14 +9,10 @@
   </head>
   <body class="homepage">
     {% extends "base.html" %}
-    <!-- {% block title %}
-      {% if subtitle %}{{ subtitle }} |{% endif %}
-      {{ title }} | {{ site_title|default:_("Django site admin") }}
-    {% endblock %} -->
     {% block content %}
-      {% if content_list %}
+      {% if about_me %}
         <div class="aboutme-section section">
-          {% for content in content_list %}
+          {% for content in about_me %}
             <h2 class="site-heading">{{ content.title }}</h2>
             <div class="inner-content">
               <div class="content-row with-img-right">

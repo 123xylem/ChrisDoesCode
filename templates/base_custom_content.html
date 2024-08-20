@@ -1,0 +1,9 @@
+<!-- {% block custom-content %} -->
+{% for content in content_list %}
+  {% if content.title %}<h2 class="site-heading">{{ content.title }}</h2>{% endif %}
+  <div class="content-section {% if content.img %}with-img{% endif %} ">
+    {{ content.wyzywig_content|safe }}
+    {% if content.img %}<img src="{{ content.img.url }}" class="content-img">{% endif %}
+  </div>
+{% endfor %}
+<!-- {% endblock %} -->
