@@ -21,19 +21,20 @@ if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
 
 #TODO://
-# Image field relates to local images when choosing on admin side
-# Make Fields better layed out
-# Check field functionality
-# Link Content model to different pages?
 # HTML markup of About page
 # HTML markup of Courses page
 # HTML markup of CV page
 # Add tiny MCE for CV pip install django-tinymce
+# Add projects and correct content
+# Add field for foreignKey Category for content on pages
 
 #DONE ----------- Show image preview on upload
     #  ------------ Apply to all image fields ^
     # ------------- Debug tool bar
     # ------------- # HTML markup of Home page
+    # Image field relates to local images when choosing on admin side
+    # Link Content model to different pages?
+
 
 
 

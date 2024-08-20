@@ -122,8 +122,9 @@ ul.main-nav li:hover {
 .projects-section .project-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
   justify-content: space-around;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .project {
@@ -137,6 +138,10 @@ ul.main-nav li:hover {
   text-decoration: none;
   color: #222 !important;
   border: 4px solid black;
+}
+
+.project-description {
+  color: #222;
 }
 
 .project:hover {
