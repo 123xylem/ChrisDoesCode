@@ -85,8 +85,15 @@
             <nav aria-label="{% translate 'Breadcrumbs' %}">
               {% block breadcrumbs %}
                 <div class="breadcrumbs">
-                  <!-- {% if title %}&rsaquo; {{ title }}{% endif %} -->
+                  <div class="hamburger" onclick="toggleMenu()">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                  </div>
                   <ul class="main-nav">
+                    <div class="close-nav mob-only" onclick="toggleMenu()">
+                      <a href="#">X</a>
+                    </div>
                     {% if user.is_authenticated %}
                       <li>
                         <a href="{% url 'admin:index' %}">{% translate 'Dashboard' %}</a>
@@ -151,6 +158,12 @@
         {% block footer %}{% endblock %}
       </footer>
     </div>
+    <script>
+      function toggleMenu() {
+        console.log('clicked')
+          document.querySelector('.main-nav').classList.toggle('active');
+      }
+    </script>
     <!-- END Container -->
     <!-- SVGs -->
     <svg xmlns="http://www.w3.org/2000/svg" class="base-svgs">
