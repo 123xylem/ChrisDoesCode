@@ -4,8 +4,10 @@
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}"
       dir="{{ LANGUAGE_BIDI|yesno:'rtl,ltr,auto' }}">
   <head>
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
     <link rel="icon"
-          type="image/x-icon"
+          type="image/png"
+          sizes="32x32"
           href="{% static 'favicon-32x32.png' %}">
     <title>
       {% block title %}Chris Does Code{% endblock %}
@@ -67,7 +69,6 @@
                       {% csrf_token %}
                       <button type="submit">{% translate 'Log out' %}</button>
                     </form>
-                    {% include "admin/color_theme_toggle.html" %}
                   {% endblock %}
                 </div>
               {% endif %}
@@ -79,9 +80,6 @@
         {% block chris-nav %}
           <div class="chris-nav">
             <div id="site-name">Chris does Code</div>
-            {% if user.is_anonymous %}
-              {% include "admin/color_theme_toggle.html" %}
-            {% endif %}
             <nav aria-label="{% translate 'Breadcrumbs' %}">
               {% block breadcrumbs %}
                 <div class="breadcrumbs">

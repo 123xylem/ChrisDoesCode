@@ -27,7 +27,6 @@ if settings.DEBUG:
 # Add projects and correct content
 # Add field for foreignKey Category for content on pages
 # Add favicon to admin area
-# Add responsive Nav
 
 #DONE ----------- Show image preview on upload
     #  ------------ Apply to all image fields ^
@@ -37,6 +36,7 @@ if settings.DEBUG:
     # Link Content model to different pages?
     # Add tiny MCE for CV pip install ckeditor-5
     # Changed App name for clarity
+    # Add responsive Nav
 
 
 

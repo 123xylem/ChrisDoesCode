@@ -1,90 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Chris does Code</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-  </head>
-  <body class="homepage">
-    {% extends "base.html" %}
-    {% block content %}
-      {% if about_me %}
-        <div class="aboutme-section section">
-          {% for content in about_me %}
-            <h2 class="site-heading">{{ content.title }}</h2>
-            <div class="inner-content">
-              <div class="content-row with-img-right">
-                <p>{{ content.content }}</p>
-                {% if content.img %}<img class="thumbnail" src="{{ content.img.url }}" alt="About me">{% endif %}
-              </div>
+{% extends "base.html" %}
+{% block content %}
+  {% if about_me %}
+    <div class="aboutme-section section">
+      {% for content in about_me %}
+        <h2 class="site-heading">{{ content.title }}</h2>
+        <div class="inner-content">
+          <div class="content-row with-img-right">
+            <p>{{ content.content }}</p>
+            {% if content.img %}<img class="thumbnail" src="{{ content.img.url }}" alt="About me">{% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No contents available.</p>
+  {% endif %}
+  <!-- Project SECTION =========
+========================-->
+  {% if project_list %}
+    <div class="projects-section section">
+      <h2 class="site-heading">Project List</h2>
+      <div class="project-grid grid-box">
+        {% for project in project_list %}
+          <a class="project grid-item" href="{{ project.link }}">
+            <h3>{{ project.title }}</h3>
+            <p class="project-description">{{ project.description }}</p>
+            <div class="related-skills">
+              {% for skill in project.related_skill.all %}
+                <p>{{ skill }}</p>
+              {% empty %}
+                <li>No skills used on this project.</li>
+              {% endfor %}
             </div>
-          {% endfor %}
-        </div>
-      {% else %}
-        <p>No contents available.</p>
-      {% endif %}
-      <!-- Project SECTION =========
-========================-->
-      {% if project_list %}
-        <div class="projects-section section">
-          <h2 class="site-heading">Project List</h2>
-          <div class="project-grid grid-box">
-            {% for project in project_list %}
-              <a class="project grid-item" href="{{ project.link }}">
-                <h3>{{ project.title }}</h3>
-                <p class="project-description">{{ project.description }}</p>
-                <div class="related-skills">
-                  {% for skill in project.related_skill.all %}
-                    <p>{{ skill }}</p>
-                  {% empty %}
-                    <li>No skills used on this project.</li>
-                  {% endfor %}
-                </div>
-                <img class="project-thumbnail img-small"
-                     src="{{ project.img.url }}"
-                     alt="">
-              </a>
-            {% endfor %}
-          </div>
-        {% else %}
-          <p>No projects available.</p>
-        </div>
-      {% endif %}
-      <!-- SKILL SECTION =========
-     ========================-->
-      {% if skill_list %}
-        <div class="skill-section section">
-          <h2 class="site-heading">Skill List</h2>
-          <div class="skill-grid">
-            {% for skill in skill_list %}
-              <div class="skill-item">
-                <!-- <h3 class="skill-title">{{ skill.title }}</h3> -->
-                <img class="thumbnail img-small skill-icon-large"
-                     src="{{ skill.img.url }}"
-                     alt="{{ skill.title }}">
-                <ul class="related-skills">
-                  {% for proof in skill.proofs.all %}
-                    <li>{{ proof.description }}</li>
-                  {% empty %}
-                    <li>No proofs available for this skill.</li>
-                  </ul>
-                {% endfor %}
-              </div>
-            {% endfor %}
-          </div>
-        {% else %}
-          <p>No skills available.</p>
-        </div>
-      {% endif %}
-      <!-- Tesimonial SECTION =========
-========================-->
-      <div class="testimonial-section section">
-        <h2 class="">Testimonials</h2>
-        {% for testimonial in testimonials %}<p class="stylised testimonial">{{ testimonial.content }}</p>{% endfor %}
+            <img class="project-thumbnail img-small"
+                 src="{{ project.img.url }}"
+                 alt="">
+          </a>
+        {% endfor %}
       </div>
-    {% endblock %}
-    <script src="" async defer></script>
-  </body>
-</html>
+    {% else %}
+      <p>No projects available.</p>
+    </div>
+  {% endif %}
+  <!-- SKILL SECTION =========
+     ========================-->
+  {% if skill_list %}
+    <div class="skill-section section">
+      <h2 class="site-heading">Skill List</h2>
+      <div class="skill-grid">
+        {% for skill in skill_list %}
+          <div class="skill-item">
+            <!-- <h3 class="skill-title">{{ skill.title }}</h3> -->
+            <img class="thumbnail img-small skill-icon-large"
+                 src="{{ skill.img.url }}"
+                 alt="{{ skill.title }}">
+            <ul class="related-skills">
+              {% for proof in skill.proofs.all %}
+                <li>{{ proof.description }}</li>
+              {% empty %}
+                <li>No proofs available for this skill.</li>
+              </ul>
+            {% endfor %}
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>No skills available.</p>
+    </div>
+  {% endif %}
+  <!-- Tesimonial SECTION =========
+========================-->
+  <div class="testimonial-section section">
+    <h2 class="">Testimonials</h2>
+    {% for testimonial in testimonials %}<p class="stylised testimonial">{{ testimonial.content }}</p>{% endfor %}
+  </div>
+{% endblock %}
