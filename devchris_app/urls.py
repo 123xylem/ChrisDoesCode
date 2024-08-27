@@ -26,11 +26,9 @@ if settings.DEBUG:
 # HTML markup of CV page
 # Add projects and correct content
 # Add field for foreignKey Category for content on pages
-# Hook up leetcode api? 2 options
-        # https://alfa-leetcode-api.onrender.com/G4ZHY5D2Ti/acSubmission
-        # https://leetcode-stats-api.herokuapp.com/G4ZHY5D2Ti
+# Fetch Submission answers from LC
+# display Answers + Style
 
-# Create app for Leetcode problem display
 
 #DONE ----------- Show image preview on upload
     #  ------------ Apply to all image fields ^
@@ -42,8 +40,8 @@ if settings.DEBUG:
     # Changed App name for clarity
     # Add responsive Nav
     # Add favicon to admin area
-
-
-
-
-# Front end styling
+    # Front end styling
+    # Fetch data from leetcode api? 2 options
+        # https://alfa-leetcode-api.onrender.com/G4ZHY5D2Ti/acSubmission
+        # https://leetcode-stats-api.herokuapp.com/G4ZHY5D2Ti
+    # Create app for Leetcode problem display
