@@ -88,4 +88,4 @@ class Page(models.Model, titleMixinClass):
       super(Page, self).save(*args, **kwargs)
 
   def get_absolute_url(self):
-      return f"/{slugify(self.title)}/"
+      return f"/{slugify(self.slug)}/"

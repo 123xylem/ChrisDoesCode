@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="code-page-container">
+    {% if solutions %}
+      <h1 class="site-heading">My Solutions</h1>
+      <div class="solutions">
+        {% for solution in solutions %}
+          <div class="solution">
+            <a href="https://leetcode.com/problems/{{ solution.titleSlug }}">
+              <h3>{{ solution.title }}</h3>
+              {{ solution.timestamp }}
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

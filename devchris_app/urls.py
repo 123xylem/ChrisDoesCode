@@ -8,7 +8,7 @@ from debug_toolbar.toolbar import debug_toolbar_urls
 urlpatterns = [
     path("", views.index.as_view(), name="index"),
     path("cv/", views.cv, name="cv"),
-    path("courses/", views.courses, name="courses"),
+    path('code-with-me/', include('code_app.urls')),
     path("about/", views.about, name="about"),
     path("dashboard/", views.dashboard, name="dashboard"),
     path("admin/", admin.site.urls),
@@ -26,7 +26,11 @@ if settings.DEBUG:
 # HTML markup of CV page
 # Add projects and correct content
 # Add field for foreignKey Category for content on pages
-# Add favicon to admin area
+# Hook up leetcode api? 2 options
+        # https://alfa-leetcode-api.onrender.com/G4ZHY5D2Ti/acSubmission
+        # https://leetcode-stats-api.herokuapp.com/G4ZHY5D2Ti
+
+# Create app for Leetcode problem display
 
 #DONE ----------- Show image preview on upload
     #  ------------ Apply to all image fields ^
@@ -37,7 +41,7 @@ if settings.DEBUG:
     # Add tiny MCE for CV pip install ckeditor-5
     # Changed App name for clarity
     # Add responsive Nav
-
+    # Add favicon to admin area
 
 
 

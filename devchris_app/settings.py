@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     'devchris_app',
     'django_ckeditor_5',
     'django_sass',
+    'code_app'
 ]
 
 MIDDLEWARE = [
