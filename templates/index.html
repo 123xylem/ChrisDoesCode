@@ -5,9 +5,9 @@
       {% for content in about_me %}
         <h2 class="site-heading">{{ content.title }}</h2>
         <div class="inner-content">
-          <div class="content-row with-img-right">
+          <div class="content-row not-with-img-right">
             <p>{{ content.content }}</p>
-            {% if content.img %}<img class="thumbnail" src="{{ content.img.url }}" alt="About me">{% endif %}
+            <!-- {% if content.img %}<img class="thumbnail" src="{{ content.img.url }}" alt="About me">{% endif %} -->
           </div>
         </div>
       {% endfor %}
