@@ -1,8 +1,7 @@
 from devchris_app.models import *
 import requests
 from datetime import datetime
-
-
+from .utils import retrieveSubmissions
 from django.views.generic import (
     TemplateView,
     DetailView,
@@ -14,21 +13,23 @@ from django.views.generic import (
 
 class codePage(TemplateView):
     template_name = "code_app/code_page.html"
-
+    submissions = retrieveSubmissions(2)
     def get_context_data(self, **kwargs):    
         context = super().get_context_data(**kwargs)
-        res1 = requests.get('https://alfa-leetcode-api.onrender.com/G4ZHY5D2Ti/acSubmission')
+        # res1 = requests.get('https://alfa-leetcode-api.onrender.com/G4ZHY5D2Ti/acSubmission')
         # res2 = requests.get('https://leetcode-stats-api.herokuapp.com/G4ZHY5D2Ti')
+
+        return {'hello': 'hello'}
         if res1.status_code == 200:
               data = res1.json()  # Parse JSON response
               # data2 = res1.json()  # Parse JSON response
-              print(data)
+            #   print(data)
               count = data['count']
               submissions = data['submission']
               filtered_submissions = [sub for sub in submissions if sub['statusDisplay'] == 'Accepted']
               for submission in filtered_submissions:
                 submission['timestamp'] = datetime.fromtimestamp(int(submission['timestamp']))                    
-     
+
         return {'count':count, 'solutions': filtered_submissions}
         # https://alfa-leetcode-api.onrender.com/G4ZHY5D2Ti/acSubmission
         # https://leetcode-stats-api.herokuapp.com/G4ZHY5D2Ti
