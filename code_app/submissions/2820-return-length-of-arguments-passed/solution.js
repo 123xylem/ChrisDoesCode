@@ -3,11 +3,7 @@
  * @return {number}
  */
 var argumentsLength = function(...args) {
-    length = 0
-    if(args) {
-        args.forEach(a =>{length++})
-    }
-    return length
+    return args.length;
 };
 
 
