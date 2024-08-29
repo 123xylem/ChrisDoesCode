@@ -26,8 +26,9 @@ if settings.DEBUG:
 # HTML markup of CV page
 # Add projects and correct content
 # Add field for foreignKey Category for content on pages
-# Fetch Submission answers from LC
 # display Answers + Style
+# Store answers in model 
+# Automate retrieval of answers weekly CELERY?
 
 
 #DONE ----------- Show image preview on upload
@@ -45,3 +46,7 @@ if settings.DEBUG:
         # https://alfa-leetcode-api.onrender.com/G4ZHY5D2Ti/acSubmission
         # https://leetcode-stats-api.herokuapp.com/G4ZHY5D2Ti
     # Create app for Leetcode problem display
+    # Fetch Submission answers from LC
+
+    # Used existing repo to sync my leetcode and new LeetCode storage repo
+    # I access this repo to retrieve my latest submissions 
