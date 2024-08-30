@@ -1,8 +1,10 @@
 from decouple import config
-import base64
-import requests
+import base64, requests, logging, time
 from .models import Submission
 from datetime import datetime
+from django.utils import timezone
+
+logger = logging.getLogger(__name__)
 
 
 BEARER_TOKEN = config('BEARER_TOKEN')
@@ -12,32 +14,40 @@ headers = {'Accept': 'application/vnd.github+json', 'Authorization' : f'token {B
 subs_url = f'{SUB_REPO_URL}/contents/submissions'
 
 def validateQaData(data):
-    if not data:
-        print('invalid data:', data)
-        return False
-    if 'content' in data.json():
+    try:
         return base64.b64decode(data.json()['content'])
-    else:
-        print('This question has no content?', data.json())
-        return False
+    except Exception as e:
+        logger.error(f"Error Validating data: {str(e)}", exc_info=True)
+        return e
 
 def getQaDataFromFiles(file_dir, filename):
-    print(subs_url+'/'+file_dir+'/'+filename)
-    requests.get(subs_url+'/'+file_dir+'/'+filename, headers=headers)
+    data = requests.get(subs_url+'/'+file_dir+'/'+filename, headers=headers)
+    if data.status_code != 200:
+        filename = 'solution.js'
+        data = requests.get(subs_url+'/'+file_dir+'/'+filename, headers=headers)
+    if data.status_code != 200:
+        logger.error(f"Error finding submission file in repo - not a .py or .js solution", exc_info=True)
 
+    return data
+
+
+# Repo Sub Retrieval
 def addSubmissionsToDbOnMetaMatch(submissions:list):
     for q_a in submissions:
         for k, v in q_a.items():
             k = ''.join([char for char in k if char.isalpha() or char == '-'])
             title = ' '.join([word.capitalize() for word in k.split('-')]).strip()
-            # print('key:', title, len(title))
             question = v[0]
             answer = v[1]
-            # print(Submission.objects.get(pk=1), title)
-            Submission.objects.filter(title=title, needsUpdate=True).update(question=question, answer=answer, needsUpdate=False)
+            submissions_to_update = Submission.objects.filter(title=title, needsUpdate=True)
+            # Check if any submissions are found
+            if submissions_to_update.exists():
+                logger.info(f"Updating submission with title: {title}")
+                submissions_to_update.update(question=question, answer=answer, needsUpdate=False)
+            else: 
+                logger.info(f"{title} doesnt need update")
 
-
-def retrieveSubmissionsFromRepo(max_count=10):
+def retrieveSubmissionsFromRepo(max_count=1000):
     count = 1
     r = requests.get(subs_url, headers=headers)
     submission_folder_urls = []
@@ -52,7 +62,7 @@ def retrieveSubmissionsFromRepo(max_count=10):
 def retrieveQandAsFromSubmission(submission_folder_urls: list) -> list:
     q_and_as = []
     for sub_files in submission_folder_urls:
-        question_data =getQaDataFromFiles(sub_files, 'README.md')
+        question_data = getQaDataFromFiles(sub_files, 'README.md')
         answer_data = getQaDataFromFiles(sub_files, 'solution.py')
         if question_data and answer_data:
             question = validateQaData(question_data)
@@ -63,12 +73,15 @@ def retrieveQandAsFromSubmission(submission_folder_urls: list) -> list:
     if q_and_as:
         addSubmissionsToDbOnMetaMatch(q_and_as)
 
-
+# META Retrieval
 def createSubmissionFromMeta(submissions:list):
     # print(submissions)
     for sub in submissions:
         new_title = sub['title']
         new_date = sub['timestamp']
+        date_and_zone = timezone.make_aware(new_date)
+        submission.submitted_date = date_and_zone
+
         try:
             submission = Submission.objects.get(title=new_title)
             if submission.submitted_date != new_date:
@@ -77,13 +90,12 @@ def createSubmissionFromMeta(submissions:list):
                 submission.save()
             else:
                 # The data is identical; no need to update
-                print("No update needed, data is identical")
+                logger.info("No update needed, data is identical")
         except Submission.DoesNotExist:
             submission = Submission.objects.create(
                 title=new_title,
                 submitted_date=new_date
             )
-
 
 def filterSubmissionMeta(submissions:list):
     filtered_submissions = [sub for sub in submissions if sub['statusDisplay'] == 'Accepted']
@@ -91,13 +103,14 @@ def filterSubmissionMeta(submissions:list):
         submission['timestamp'] = datetime.fromtimestamp(int(submission['timestamp']))
     createSubmissionFromMeta(filtered_submissions)
 
-
 def retrieveSubmissionMetaFromLeetCode() -> list[dict]:
-        res1 = requests.get(SUB_META_URL)
+        leet_meta = requests.get(SUB_META_URL)
         # res2 = requests.get('https://leetcode-stats-api.herokuapp.com/G4ZHY5D2Ti')
-        if res1.status_code == 200:
-              data = res1.json()
-              submissions = data['submission']
-            #   print(type(submissions))
-              filterSubmissionMeta(submissions)
+        if leet_meta.status_code == 200:
+                data = leet_meta.json()
+                if 'submissions' in data:
+                    submissions = data['submission']            
+                    filterSubmissionMeta(submissions)
+                else:
+                    logger.error(f"{time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())} No Meta submissions in data ", exc_info=True)
 

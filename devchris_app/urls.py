@@ -27,7 +27,6 @@ if settings.DEBUG:
 # Add projects and correct content
 # Add field for foreignKey Category for content on pages
 # display Answers + Style
-# Store answers in model 
 # Automate retrieval of answers weekly CELERY?
 
 
@@ -50,3 +49,4 @@ if settings.DEBUG:
 
     # Used existing repo to sync my leetcode and new LeetCode storage repo
     # I access this repo to retrieve my latest submissions 
+    # Store answers in model 
