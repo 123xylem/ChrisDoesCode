@@ -12,16 +12,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os 
+from decouple import config
 
+SECRET_KEY = config('SECRET_KEY')
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
-# # Static files (CSS, JavaScript, Images)
-# STATIC_URL = '/static/'
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'devchris/static'),
-# ]
 
 # Media files
 MEDIA_URL = '/media/'
@@ -42,8 +37,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-vunpqg4+ptgwm8u668hng-v=gnwc&spa+(l$!r6a%$_9@c5%$&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -66,7 +59,8 @@ INSTALLED_APPS = [
     'devchris_app',
     'django_ckeditor_5',
     'django_sass',
-    'code_app'
+    'code_app',
+    'django_cron'
 ]
 
 MIDDLEWARE = [
@@ -134,6 +128,42 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'errors.log'),
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'WARNING',
+            'propagate': True,
+        },
+        'django.db.backends': {  # Database-related logs
+            'handlers': ['file'],
+            'level': 'WARNING',  # Log only warnings and above
+            'propagate': False,
+        },
+        'django.request': {  # Request logs
+            'handlers': ['file'],
+            'level': 'WARNING',  # Log only warnings and above
+            'propagate': False,
+        },
+        '': {  # Root logger
+            'handlers': ['file'],
+            'level': 'WARNING',
+            'propagate': True,
+        },
+    },
+}
+
 
 
 # Internationalization
@@ -257,3 +287,10 @@ CKEDITOR_5_CONFIGS = {
 
 # Define a constant in settings.py to specify file upload permissions
 CKEDITOR_5_FILE_UPLOAD_PERMISSION = "staff"  # Possible values: "staff", "authenticated", "any"
+
+
+# CRON CONFIG
+
+CRON_CLASSES = [
+    "devchris_app.cron_jobs.fetch_data.FetchSubmissionsCronJob",
+]

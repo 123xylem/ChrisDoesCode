@@ -14,8 +14,6 @@ from django.views.generic import (
 
 class codePage(TemplateView):
     template_name = "code_app/code_page.html"
-    
-
     #TODO: Manual retrieval of submission and meta MOVE THIS TO CRON
     # submissions = retrieveSubmissionsFromRepo(20)
     # sub_meta = retrieveSubmissionMetaFromLeetCode()
