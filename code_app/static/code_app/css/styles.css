@@ -1,0 +1,108 @@
+.small-aside {
+  font-size: 0.8rem;
+  font-style: italic;
+  vertical-align: text-top;
+}
+
+.leetcode-stats-bar {
+  display: flex;
+  justify-content: space-evenly;
+  max-width: 66%;
+  margin: 0 auto;
+  background: #0a232e;
+  border-radius: 17px;
+}
+
+.meta-box {
+  font-size: 1.35rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.meta-box h3 {
+  font-size: 1.25rem;
+  color: white;
+  font-weight: 400;
+}
+
+.meta-box.color-1 p {
+  color: green;
+}
+
+.meta-box.color-2 p {
+  color: yellow;
+}
+
+.meta-box.color-3 p {
+  color: red;
+}
+
+.submission {
+  margin-top: 2rem;
+}
+
+.submission-view {
+  background: #14171e;
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.submission-view a {
+  width: 100%;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+.submission-view a .submission-title {
+  color: white;
+  margin: 0 auto;
+}
+
+.submission-view .question {
+  max-width: calc(50% - 2rem);
+  overflow: auto;
+  margin-right: 2rem;
+  max-height: 500px;
+  direction: rtl;
+  text-align: left;
+  /* Align text to the left */
+  padding-left: 1rem;
+  color: #b2b2b2;
+}
+
+.submission-view .question li {
+  color: #b2b2b2;
+  direction: ltr;
+  margin-left: 0.7rem;
+}
+
+.submission-view .question::-webkit-scrollbar {
+  display: none;
+}
+
+.submission-view .question:hover ::-webkit-scrollbar {
+  display: inherit;
+}
+
+.submission-view .answer {
+  max-width: calc(50% - 2rem);
+  width: 100%;
+  padding-left: 1rem;
+  background: #264c5d;
+}
+
+@media (max-width: 850px) {
+  .submission-view {
+    flex-direction: column;
+  }
+  .submission-view .question,
+.submission-view .answer {
+    max-width: 100%;
+    padding-left: unset;
+  }
+}

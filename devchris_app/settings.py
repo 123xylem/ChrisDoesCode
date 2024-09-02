@@ -27,8 +27,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_URL = '/static/'
 APP_DIR = os.path.join(BASE_DIR, 'devchris_app')
+CODE_APP_DIR = os.path.join(BASE_DIR, 'code_app')
 STATICFILES_DIRS = [
     os.path.join(APP_DIR, 'static'),
+    os.path.join(CODE_APP_DIR, 'static'),
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

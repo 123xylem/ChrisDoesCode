@@ -1,15 +1,40 @@
 {% extends "base.html" %}
+{% load static %}
+{% block extrastyle %}
+  <link rel="stylesheet"
+        type='text/css'
+        href="{% static 'code_app/css/styles.css' %}">
+{% endblock %}
 {% block content %}
   <div class="code-page-container">
-    {% if solutions %}
-      <h1 class="site-heading">My Solutions</h1>
+    {% if submissions %}
+      <h1 class="site-heading">
+        My Solutions <span class="small-aside">Updated Weekly*</span>
+      </h1>
+      <div class="leetcode-stats-bar">
+        {% if leetcode_meta %}
+          {% for title, meta in leetcode_meta.items %}
+            <div class="meta-box color-{% if forloop.counter0 %}{{ forloop.counter0 }}{% endif %}">
+              <h3>{{ title|title }}</h3>
+              <p>{{ meta }}</p>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
       <div class="solutions">
-        {% for solution in solutions %}
-          <div class="solution">
-            <a href="https://leetcode.com/problems/{{ solution.titleSlug }}">
-              <h3>{{ solution.title }}</h3>
-              {{ solution.timestamp }}
-            </a>
+        {% for submission in submissions %}
+          <div class="submission">
+            <div class="submission-view">
+              <a class="submission-title__link"
+                 href="https://leetcode.com/problems/{{ submission.slug }}">
+                <h3 class="submission-title">
+                  {% if forloop.counter %}{{ forloop.counter }}.{% endif %}
+                  {{ submission.title }}
+                </h3>
+              </a>
+              <div class="question">{{ submission.question|safe }}</div>
+              <div class="answer">{{ submission.answer|safe }}</div>
+            </div>
           </div>
         {% endfor %}
       </div>

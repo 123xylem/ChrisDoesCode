@@ -1,8 +1,9 @@
 from devchris_app.models import *
-import requests
+import requests, logging
+from decouple import config
 from datetime import datetime
 from .code_submissions import retrieveSubmissionsFromRepo, retrieveSubmissionMetaFromLeetCode
-from .models import Submission
+from .models import Submission, SubmissionMeta
 from django.views.generic import (
     TemplateView,
     DetailView,
@@ -11,30 +12,38 @@ from django.views.generic import (
     UpdateView,
     DetailView
 )
+from .utils import *
 
+logger = logging.getLogger(__name__)
+
+LEET_STATS_URL = config('LEET_STATS_URL')
 class codePage(TemplateView):
     template_name = "code_app/code_page.html"
-    #TODO: Manual retrieval of submission and meta MOVE THIS TO CRON
-    # submissions = retrieveSubmissionsFromRepo(20)
-    # sub_meta = retrieveSubmissionMetaFromLeetCode()
     
     def get_context_data(self, **kwargs):    
-        # context = super().get_context_data(**kwargs)
-        # res1 = requests.get('https://alfa-leetcode-api.onrender.com/G4ZHY5D2Ti/acSubmission')
-        #TODO make this a leetcode summary Model
-        #TODO call it with automated worker
-        leetcode_summary = requests.get('https://leetcode-stats-api.herokuapp.com/G4ZHY5D2Ti')
-        if leetcode_summary.status_code == 200:
-              data = leetcode_summary.json()  # Parse JSON response
-              # data2 = res1.json()  # Parse JSON response
-              code_meta = {}
-              code_meta['totalSolved'] = data['totalSolved']
-              code_meta['easySolved'] = data['easySolved']
-              code_meta['mediumSolved'] = data['mediumSolved']
-              code_meta['hardSolved'] = data['hardSolved']
-              code_meta['acceptanceRate']= data['acceptanceRate']
-              submissions = Submission.objects.all()
-        return {'code_meta':code_meta, 'submissions': submissions}
+        leetcode_meta = SubmissionMeta.objects.all()
+        total_solved = easy_solved = medium_solved = hard_solved = 0
+
+        for meta in leetcode_meta:
+            total_solved += meta.total_solved
+            easy_solved += meta.easy_solved
+            medium_solved += meta.medium_solved
+            hard_solved += meta.hard_solved
+
+        formatted_meta = {
+            'Total Solved': total_solved,
+            'Easy Solved': easy_solved,
+            'Mid Solved': medium_solved,
+            'Hard Solved': hard_solved
+        }
+
+        submissions = Submission.objects.all().order_by('id')
+        for sub in submissions:
+            sub.question = clean_text(sub.question)
+            sub.answer = clean_text(sub.answer, True)
+            # print(sub.answer)
+        
+        return {'leetcode_meta':formatted_meta, 'submissions': submissions}
         # https://alfa-leetcode-api.onrender.com/G4ZHY5D2Ti/acSubmission
         # https://leetcode-stats-api.herokuapp.com/G4ZHY5D2Ti
 
