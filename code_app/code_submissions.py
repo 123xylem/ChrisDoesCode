@@ -1,12 +1,12 @@
 from decouple import config
 import base64, requests, logging, time
-from .models import Submission
+from .models import Submission, SubmissionMeta
 from datetime import datetime
 from django.utils import timezone
 
 logger = logging.getLogger(__name__)
 
-
+LEET_STATS_URL = config('LEET_STATS_URL')
 BEARER_TOKEN = config('BEARER_TOKEN')
 SUB_REPO_URL = config('SUB_REPO_URL')
 SUB_META_URL = config('SUB_META_URL')
@@ -105,7 +105,6 @@ def filterSubmissionMeta(submissions:list):
 
 def retrieveSubmissionMetaFromLeetCode() -> list[dict]:
         leet_meta = requests.get(SUB_META_URL)
-        # res2 = requests.get('https://leetcode-stats-api.herokuapp.com/G4ZHY5D2Ti')
         if leet_meta.status_code == 200:
                 data = leet_meta.json()
                 if 'submissions' in data:
@@ -114,3 +113,23 @@ def retrieveSubmissionMetaFromLeetCode() -> list[dict]:
                 else:
                     logger.error(f"{time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())} No Meta submissions in data ", exc_info=True)
 
+
+
+def retrieveLeetMetaStats():
+    leetcode_summary = requests.get(LEET_STATS_URL)
+    if leetcode_summary.status_code == 200:
+        data = leetcode_summary.json()  # Parse JSON response
+        # print(data)
+        prev_total = SubmissionMeta.objects.get(pk=5).total_solved
+        print(prev_total)
+        if not prev_total:
+            if 'totalSolved' in data:
+                try:
+                    obj, created = SubmissionMeta.objects.update_or_create(
+                        total_solved = 0,
+                        defaults={'total_solved': data['totalSolved'], 'easy_solved': data['easySolved'], 'medium_solved': data['mediumSolved'], 'hard_solved': data['hardSolved']},
+                    )
+                except Exception as e:
+                    logger.error(f"Error updating leetcodeMeta: {e}")
+
+retrieveLeetMetaStats()

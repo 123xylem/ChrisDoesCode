@@ -1,0 +1,97 @@
+.small-aside {
+  font-size: 0.8rem;
+  font-style: italic;
+  vertical-align: text-top;
+}
+
+.leetcode-stats-bar {
+  display: flex;
+  justify-content: space-evenly;
+  max-width: 66%;
+  margin: 0 auto;
+  background: #0a232e;
+  border-radius: 17px;
+}
+
+.meta-box {
+  font-size: 1.35rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  h3 {
+    font-size: 1.25rem;
+    color: white;
+    font-weight: 400;
+  }
+  &.color-1 p {
+    color: green;
+  }
+
+  &.color-2 p {
+    color: yellow;
+  }
+  &.color-3 p {
+    color: red;
+  }
+}
+.submission {
+  margin-top: 2rem;
+}
+
+.submission-view {
+  background: #14171e;
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  a {
+    width: 100%;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    .submission-title {
+      color: white;
+      margin: 0 auto;
+    }
+  }
+
+  .question {
+    max-width: calc(50% - 2rem);
+    overflow: auto;
+    margin-right: 2rem;
+    max-height: 500px;
+    direction: rtl;
+    text-align: left; /* Align text to the left */
+    padding-left: 1rem;
+    color: #b2b2b2;
+    li {
+      color: #b2b2b2;
+      direction: ltr;
+      margin-left: 0.7rem;
+    }
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    &:hover ::-webkit-scrollbar {
+      display: inherit;
+    }
+  }
+
+  .answer {
+    max-width: calc(50% - 2rem);
+    width: 100%;
+    padding-left: 1rem;
+    background: #264c5d;
+  }
+
+  @media (max-width: 850px) {
+    flex-direction: column;
+
+    .question,
+    .answer {
+      max-width: 100%;
+      padding-left: unset;
+    }
+  }
+}
