@@ -1,0 +1,43 @@
+{% block footer %}
+  <div class="chris-nav">
+    <div id="site-name">Chris does Code</div>
+    <nav aria-label="{% translate 'Breadcrumbs' %}">
+      {% block breadcrumbs %}
+        <div class="breadcrumbs">
+          <div class="hamburger" onclick="toggleMenu()">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+          </div>
+          <ul class="main-nav">
+            <div class="close-nav mob-only" onclick="toggleMenu()">
+              <a href="#">X</a>
+            </div>
+            {% if user.is_authenticated %}
+              <li>
+                <a href="{% url 'admin:index' %}">{% translate 'Dashboard' %}</a>
+              </li>
+            {% endif %}
+            <li>
+              <a href="/">{% translate 'Home' %}</a>
+            </li>
+            {% for page in published_pages %}
+              <li>
+                <a href="{{ page.get_absolute_url }}">{{ page.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endblock %}
+    </nav>
+  </div>
+  <div class="footer-inner">
+    <div class="my-details">
+      <p class="detail">
+        Email: <span class="hover-to-view">{{ MY_EMAIL }}</span>
+      </p>
+      <p class="detail">LinkedIn: {{ MY_LINKEDIN }}</p>
+      <p class="detail"></p>
+    </div>
+  </div>
+{% endblock %}

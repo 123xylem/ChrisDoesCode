@@ -26,7 +26,8 @@ if settings.DEBUG:
 # HTML markup of CV page
 # Add projects and correct content
 # Add field for foreignKey Category for content on pages
-# display Answers + Style
+# Add footer Contact
+# Add Email Form
 
 
 #DONE ----------- Show image preview on upload
@@ -49,4 +50,6 @@ if settings.DEBUG:
     # Used existing repo to sync my leetcode and new LeetCode storage repo
     # I access this repo to retrieve my latest submissions 
     # Store answers in model 
-    #TODO: Manual retrieval of submission and meta MOVE THIS TO CRON
+    # Manual retrieval of submission and meta MOVE THIS TO CRON
+    # Model Leet Meta instead of request each time
+    # # display Answers + Style
