@@ -4,10 +4,10 @@
     <!-- =========ABOUT SECTION=========== -->
     <div class="aboutme-section section">
       {% for content in about_me %}
-        <h2 class="site-heading">{{ content.title }}</h2>
+        <!-- <h2 class="site-heading">{{ content.title }}</h2> -->
         <div class="inner-content">
-          <div class="content-row not-with-img-right">
-            <p>{{ content.content }}</p>
+          <div class="content-row column">
+            <p>{{ content.wyzywig_content|safe }}</p>
           </div>
         </div>
       {% endfor %}

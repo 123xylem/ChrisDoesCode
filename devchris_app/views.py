@@ -24,7 +24,7 @@ class index(TemplateView):
         context['project_list'] = Project.objects.all()
         context['about_me'] = Content.objects.filter(title='About Me')
         context['testimonials'] = Content.objects.filter(title__startswith="Testimonial")
-
+        context['homepage'] = True
         return context
 
 
@@ -37,7 +37,7 @@ def about(request):
       
 def cv(request):
     context = {
-        'content_list': Content.objects.filter(title="CV")
+        'cv_content': Content.objects.filter(title="CV")
     }
     return render(request, 'base.html', context)
 
