@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
   {% if about_me %}
+    <!-- =========ABOUT SECTION=========== -->
     <div class="aboutme-section section">
       {% for content in about_me %}
         <h2 class="site-heading">{{ content.title }}</h2>
         <div class="inner-content">
           <div class="content-row not-with-img-right">
             <p>{{ content.content }}</p>
-            <!-- {% if content.img %}<img class="thumbnail" src="{{ content.img.url }}" alt="About me">{% endif %} -->
           </div>
         </div>
       {% endfor %}
@@ -19,12 +19,16 @@
 ========================-->
   {% if project_list %}
     <div class="projects-section section">
-      <h2 class="site-heading">Project List</h2>
-      <div class="project-grid grid-box">
+      <h2 class="site-heading">My Projects</h2>
+      <div class="project-grid grid-container">
         {% for project in project_list %}
-          <a class="project grid-item" href="{{ project.link }}">
-            <h3>{{ project.title }}</h3>
+          <a class="project grid-item magic-underline black"
+             href="{{ project.link }}">
+            <h3 class="">{{ project.title }}</h3>
             <p class="project-description">{{ project.description }}</p>
+            <img class="project-thumbnail img-small"
+                 src="{{ project.img.url }}"
+                 alt="">
             <div class="related-skills">
               {% for skill in project.related_skill.all %}
                 <p>{{ skill }}</p>
@@ -32,25 +36,22 @@
                 <li>No skills used on this project.</li>
               {% endfor %}
             </div>
-            <img class="project-thumbnail img-small"
-                 src="{{ project.img.url }}"
-                 alt="">
           </a>
         {% endfor %}
       </div>
-    {% else %}
-      <p>No projects available.</p>
     </div>
+  {% else %}
+    <p>No projects available.</p>
   {% endif %}
   <!-- SKILL SECTION =========
      ========================-->
   {% if skill_list %}
     <div class="skill-section section">
       <h2 class="site-heading">Skill List</h2>
-      <div class="skill-grid">
+      <div class="skill-grid grid-container">
         {% for skill in skill_list %}
-          <div class="skill-item">
-            <!-- <h3 class="skill-title">{{ skill.title }}</h3> -->
+          <div class="skill-item grid-item">
+            <h3 class="skill-title">{{ skill.title }}</h3>
             <img class="thumbnail img-small skill-icon-large"
                  src="{{ skill.img.url }}"
                  alt="{{ skill.title }}">
@@ -64,14 +65,14 @@
           </div>
         {% endfor %}
       </div>
-    {% else %}
-      <p>No skills available.</p>
     </div>
+  {% else %}
+    <p>No skills available.</p>
   {% endif %}
   <!-- Tesimonial SECTION =========
 ========================-->
   <div class="testimonial-section section">
-    <h2 class="">Testimonials</h2>
+    <h2 class="site-heading">Testimonials</h2>
     {% for testimonial in testimonials %}<p class="stylised testimonial">{{ testimonial.content }}</p>{% endfor %}
   </div>
 {% endblock %}
