@@ -121,7 +121,6 @@ def retrieveLeetMetaStats():
         data = leetcode_summary.json()  # Parse JSON response
         # print(data)
         prev_total = SubmissionMeta.objects.get(pk=5).total_solved
-        print(prev_total)
         if not prev_total:
             if 'totalSolved' in data:
                 try:

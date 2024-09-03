@@ -1,25 +1,18 @@
+{% load i18n %}
 {% block footer %}
-  <div class="chris-nav">
+  <!-- <div class="chris-nav">
     <div id="site-name">Chris does Code</div>
     <nav aria-label="{% translate 'Breadcrumbs' %}">
       {% block breadcrumbs %}
         <div class="breadcrumbs">
-          <div class="hamburger" onclick="toggleMenu()">
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-          </div>
           <ul class="main-nav">
-            <div class="close-nav mob-only" onclick="toggleMenu()">
-              <a href="#">X</a>
-            </div>
             {% if user.is_authenticated %}
               <li>
                 <a href="{% url 'admin:index' %}">{% translate 'Dashboard' %}</a>
               </li>
             {% endif %}
             <li>
-              <a href="/">{% translate 'Home' %}</a>
+              <a href="/">Home</a>
             </li>
             {% for page in published_pages %}
               <li>
@@ -30,14 +23,20 @@
         </div>
       {% endblock %}
     </nav>
-  </div>
+  </div> -->
   <div class="footer-inner">
-    <div class="my-details">
-      <p class="detail">
-        Email: <span class="hover-to-view">{{ MY_EMAIL }}</span>
-      </p>
-      <p class="detail">LinkedIn: {{ MY_LINKEDIN }}</p>
-      <p class="detail"></p>
+    <div class="footer-content">
+      <h3>Get in touch!</h3>
+      <div class="my-details">
+        <p class="detail">
+          Email: <span class="hover-to-view magic-underline">{{ MY_EMAIL }}</span>
+        </p>
+        <p class="detail">
+          LinkedIn: <span class="hover-to-view magic-underline">{{ MY_LINKEDIN }}</span>
+        </p>
+        <p class="detail"></p>
+      </div>
+      <p class="copyright">All Rights Reserved - Chris Does Code &copy;</p>
     </div>
   </div>
 {% endblock %}
