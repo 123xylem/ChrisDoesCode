@@ -4,6 +4,13 @@
   vertical-align: text-top;
 }
 
+@media (max-width: 600px) {
+  .small-aside {
+    width: 100%;
+    display: block;
+  }
+}
+
 .leetcode-stats-bar {
   display: flex;
   justify-content: space-evenly;
@@ -11,6 +18,13 @@
   margin: 0 auto;
   background: #0a232e;
   border-radius: 17px;
+}
+
+@media (max-width: 768px) {
+  .leetcode-stats-bar {
+    max-width: unset;
+    flex-wrap: wrap;
+  }
 }
 
 .meta-box {
@@ -25,6 +39,13 @@
   font-size: 1.25rem;
   color: white;
   font-weight: 400;
+}
+
+@media (max-width: 768px) {
+  .meta-box.color- {
+    width: 100%;
+    font-weight: bold;
+  }
 }
 
 .meta-box.color-1 p {
@@ -104,5 +125,6 @@
 .submission-view .answer {
     max-width: 100%;
     padding-left: unset;
+    padding: 0.5rem;
   }
 }

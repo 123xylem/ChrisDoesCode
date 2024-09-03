@@ -2,6 +2,11 @@
   font-size: 0.8rem;
   font-style: italic;
   vertical-align: text-top;
+
+  @media (max-width: 600px) {
+    width: 100%;
+    display: block;
+  }
 }
 
 .leetcode-stats-bar {
@@ -11,6 +16,10 @@
   margin: 0 auto;
   background: #0a232e;
   border-radius: 17px;
+  @media (max-width: 768px) {
+    max-width: unset;
+    flex-wrap: wrap;
+  }
 }
 
 .meta-box {
@@ -24,6 +33,13 @@
     color: white;
     font-weight: 400;
   }
+  &.color- {
+    @media (max-width: 768px) {
+      width: 100%;
+      font-weight: bold;
+    }
+  }
+
   &.color-1 p {
     color: green;
   }
@@ -92,6 +108,7 @@
     .answer {
       max-width: 100%;
       padding-left: unset;
+      padding: 0.5rem;
     }
   }
 }

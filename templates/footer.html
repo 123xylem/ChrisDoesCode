@@ -1,31 +1,8 @@
 {% load i18n %}
 {% block footer %}
-  <!-- <div class="chris-nav">
-    <div id="site-name">Chris does Code</div>
-    <nav aria-label="{% translate 'Breadcrumbs' %}">
-      {% block breadcrumbs %}
-        <div class="breadcrumbs">
-          <ul class="main-nav">
-            {% if user.is_authenticated %}
-              <li>
-                <a href="{% url 'admin:index' %}">{% translate 'Dashboard' %}</a>
-              </li>
-            {% endif %}
-            <li>
-              <a href="/">Home</a>
-            </li>
-            {% for page in published_pages %}
-              <li>
-                <a href="{{ page.get_absolute_url }}">{{ page.title }}</a>
-              </li>
-            {% endfor %}
-          </ul>
-        </div>
-      {% endblock %}
-    </nav>
-  </div> -->
   <div class="footer-inner">
     <div class="footer-content">
+      <a href="#site-name" class="back-to-top">^</a>
       <h3>Get in touch!</h3>
       <div class="my-details">
         <p class="detail">
