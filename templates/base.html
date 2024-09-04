@@ -162,6 +162,21 @@
             behavior: 'smooth'
         });
     });
+    function pauseVideo(video) {
+            if (video) {
+                video.pause();
+            }
+        }
+
+        function pauseVideoOnScroll() {
+            var video = document.querySelector('.bg-video');
+            if (video) {
+                video.pause();
+            }
+        }
+
+        // Attach event listener to the scroll event
+        window.addEventListener('scroll', pauseVideoOnScroll, { passive: true });
 
     </script>
     <!-- END Container -->

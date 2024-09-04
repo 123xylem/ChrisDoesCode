@@ -36,6 +36,10 @@ p,
 nav {
   @media (max-width: 768px) {
     background: #264c5d;
+    z-index: 9;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 }
 .chris-nav {
@@ -88,6 +92,7 @@ ul.main-nav {
       min-width: 34%;
       right: 0;
       top: 30px;
+      padding-bottom: 1rem;
     }
   }
 }
@@ -119,6 +124,9 @@ ul.main-nav li:hover {
 .site-heading {
   font-weight: 300;
   color: white;
+  @media (max-width: 768px) {
+    margin: 0.5rem auto;
+  }
 }
 
 /* Sections */
@@ -127,7 +135,7 @@ ul.main-nav li:hover {
   margin: 0 auto;
   max-width: 1200px;
   @media (max-width: 768px) {
-    padding: 1rem;
+    padding: 0.5rem 1rem;
   }
 }
 
@@ -200,6 +208,7 @@ ul.main-nav li:hover {
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+    text-align: left;
   }
 }
 
@@ -506,6 +515,10 @@ footer {
     border-radius: 2px;
     padding: 0px 10px 10px;
     height: 1.8rem;
+    @media (max-width: 768px) {
+      right: 1.5rem;
+      top: 0;
+    }
   }
 
   .footer-content {
@@ -545,6 +558,7 @@ footer {
       @media (max-width: 350px) {
         flex-direction: column;
         display: flex;
+        max-width: 100%;
       }
     }
   }
@@ -562,11 +576,12 @@ footer {
 
   @media (max-width: 768px) {
     padding: 0 !important;
+    max-width: 100%;
     ul.main-nav {
       display: flex !important;
     }
     .footer-content {
-      width: 100%;
+      max-width: 100%;
       padding: 2rem 1rem;
     }
   }
