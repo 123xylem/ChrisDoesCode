@@ -1,9 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, FileResponse
 from django.urls import reverse
 from django.views import generic
 from devchris_app.models import *
+from django.template.loader import render_to_string
 import json
 
 from django.views.generic import (
@@ -31,7 +32,7 @@ class index(TemplateView):
 
 def about(request):
     context = {
-        'content_list': Content.objects.filter(title__startswith="About part")
+        'about_content': Content.objects.filter(title__startswith="About part")
     }
     return render(request, 'base.html', context)
       
@@ -40,6 +41,12 @@ def cv(request):
         'cv_content': Content.objects.filter(title="CV")
     }
     return render(request, 'base.html', context)
+
+def cvDownload(request):
+    cv_content = Content.objects.filter(title='CV').first().wyzywig_content
+    response = HttpResponse(cv_content, content_type="text/html")
+    response["Content-Disposition"] = 'attachment; filename="chris-cv.doc"'
+    return response
 
 def dashboard(request):
     return HttpResponse("Hello, world. You're at dashboard.")

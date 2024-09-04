@@ -11,7 +11,7 @@
           href="{% static 'favicon-32x32.png' %}">
     <!-- #TODO retrieve page titles here for each page via views -->
     <title>
-      {% block title %}{{ title }}Chris Does Code{% endblock %}
+      {% block title %}{{ title }}Chris Codes{% endblock %}
     </title>
     <link rel="stylesheet" href="{% static 'admin/css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
@@ -81,9 +81,10 @@
                      src="{% static 'media/coding.mp4' %}"
                      type="video/mp4"
                      autoplay
+                     loop
                      muted>
               </video>
-              <h1>Chris does Code</h1>
+              <h1>Chris Codes</h1>
             </div>
             <nav aria-label="{% translate 'Breadcrumbs' %}">
               {% block breadcrumbs %}
@@ -126,7 +127,7 @@
         <main id="content-start" class="content" tabindex="-1">
           <!-- Content -->
           <div id="content" class="{% block coltype %}colM{% endblock %}">
-            {% if content_list %}
+            {% if content_list or about_content %}
               {% block custom_content_block %}
                 {% include "base_custom_content.html" %}
               {% endblock %}

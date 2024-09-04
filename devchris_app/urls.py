@@ -8,6 +8,7 @@ from debug_toolbar.toolbar import debug_toolbar_urls
 urlpatterns = [
     path("", views.index.as_view(), name="index"),
     path("cv/", views.cv, name="cv"),
+    path("cv/download", views.cvDownload, name="cv-download"),
     path('code-with-me/', include('code_app.urls')),
     path("about/", views.about, name="about"),
     path("dashboard/", views.dashboard, name="dashboard"),
@@ -26,9 +27,9 @@ if settings.DEBUG:
 # HTML markup of CV page
 # Add projects and correct content
 # Add field for foreignKey Category for content on pages
-# Add footer Contact
 # Add Email Form
-
+# get images of projects
+# Deploy live
 
 #DONE ----------- Show image preview on upload
     #  ------------ Apply to all image fields ^
@@ -53,3 +54,8 @@ if settings.DEBUG:
     # Manual retrieval of submission and meta MOVE THIS TO CRON
     # Model Leet Meta instead of request each time
     # # display Answers + Style
+    # Add footer Contact
+
+    1,1,1,1
+
+
