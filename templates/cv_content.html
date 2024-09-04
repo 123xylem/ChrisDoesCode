@@ -1,3 +1,4 @@
 <div class="cv-modal">
+  <a href="{% url 'cv-download' %}" class="download-cv">Download</a>
   {% for content in cv_content %}{{ content.wyzywig_content|safe }}{% endfor %}
 </div>

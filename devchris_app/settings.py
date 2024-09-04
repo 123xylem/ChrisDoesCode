@@ -46,7 +46,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.1.55', '0.0.0.0']
 
 
 # Application definition
@@ -225,13 +225,11 @@ customColorPalette = [
     },
 ]
 
-# CKEDITOR_5_CUSTOM_CSS = 'path_to.css' # optional
-# CKEDITOR_5_FILE_STORAGE = "path_to_storage.CustomStorage" # optional
 CKEDITOR_5_CONFIGS = {
 'default': {
     'toolbar': ['heading', '|', 'bold', 'italic', 'link',
                 'bulletedList', 'blockQuote', 'imageUpload', ],
-    'extraAllowedContent': 'img[width,height];',  # Allow inline styles for images
+    'extraAllowedContent': 'img[width,height], *(*);*{*}',  # Allow inline styles for images
     'width': 'auto',
     'allowedContent': True,  # Allows all content, including inline styles
 
@@ -290,6 +288,7 @@ CKEDITOR_5_CONFIGS = {
     }
 }
 }
+
 
 # Define a constant in settings.py to specify file upload permissions
 CKEDITOR_5_FILE_UPLOAD_PERMISSION = "staff"  # Possible values: "staff", "authenticated", "any"
