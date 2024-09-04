@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
   {% if about_me %}
     <!-- =========ABOUT SECTION=========== -->
@@ -6,6 +7,8 @@
       {% for content in about_me %}
         <!-- <h2 class="site-heading">{{ content.title }}</h2> -->
         <div class="inner-content">
+          <!-- <video class="bg-video" src="{% static 'media/coding.mp4' %}" type="video/mp4" autoplay muted>
+          </video> -->
           <div class="content-row column">
             <p>{{ content.wyzywig_content|safe }}</p>
           </div>
@@ -24,7 +27,7 @@
         {% for project in project_list %}
           <a class="project grid-item magic-underline black"
              href="{{ project.link }}">
-            <h3 class="">{{ project.title }}</h3>
+            <h3 class="project-title">{{ project.title }}</h3>
             <p class="project-description">{{ project.description }}</p>
             <img class="project-thumbnail img-small"
                  src="{{ project.img.url }}"
@@ -47,14 +50,14 @@
      ========================-->
   {% if skill_list %}
     <div class="skill-section section">
-      <h2 class="site-heading">Skill List</h2>
+      <h2 class="site-heading">Proficiencies</h2>
       <div class="skill-grid grid-container">
         {% for skill in skill_list %}
-          <div class="skill-item grid-item">
+          <div class="skill-item grid-item magic-underline black">
             <h3 class="skill-title">{{ skill.title }}</h3>
-            <img class="thumbnail img-small skill-icon-large"
-                 src="{{ skill.img.url }}"
-                 alt="{{ skill.title }}">
+            <!-- <img class="thumbnail img-small skill-icon-large"
+      src="{{ skill.img.url }}"
+      alt="{{ skill.title }}"> -->
             <ul class="related-skills">
               {% for proof in skill.proofs.all %}
                 <li>{{ proof.description }}</li>

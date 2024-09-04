@@ -8,5 +8,6 @@ def published_pages(request):
 def site_details(request):
     return {
     'MY_EMAIL': settings.MY_EMAIL,
-    'MY_LINKEDIN': settings.MY_LINKEDIN
+    'MY_LINKEDIN': settings.MY_LINKEDIN,
+    'MY_GITHUB': settings.MY_GITHUB,
     }

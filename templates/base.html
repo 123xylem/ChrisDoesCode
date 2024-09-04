@@ -13,7 +13,7 @@
     <title>
       {% block title %}{{ title }}Chris Does Code{% endblock %}
     </title>
-    <link rel="stylesheet" href="{% static "admin/css/base.css" %}">
+    <link rel="stylesheet" href="{% static 'admin/css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     {% block dark-mode-vars %}
       <link rel="stylesheet" href="{% static "admin/css/dark_mode.css" %}">
@@ -76,7 +76,13 @@
         <!-- END Header -->
         {% block chris-nav %}
           <div class="chris-nav">
-            <div id="site-name" onclick="goHome()">
+            <div id="site-name" style="position: relative;" onclick="goHome()">
+              <video class="bg-video"
+                     src="{% static 'media/coding.mp4' %}"
+                     type="video/mp4"
+                     autoplay
+                     muted>
+              </video>
               <h1>Chris does Code</h1>
             </div>
             <nav aria-label="{% translate 'Breadcrumbs' %}">
