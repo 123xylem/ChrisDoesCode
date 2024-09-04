@@ -17,6 +17,7 @@ from decouple import config
 SECRET_KEY = config('SECRET_KEY')
 MY_LINKEDIN = config('MY_LINKEDIN')
 MY_EMAIL = config('MY_EMAIL')
+MY_GITHUB = config('MY_GITHUB')
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 

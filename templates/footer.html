@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load static %}
 {% block footer %}
   <div class="footer-inner">
     <div class="footer-content">
@@ -6,10 +6,19 @@
       <h3>Get in touch!</h3>
       <div class="my-details">
         <p class="detail">
-          Email: <span class="hover-to-view magic-underline">{{ MY_EMAIL }}</span>
+          Email: <span class="hover-to-view">{{ MY_EMAIL }}</span>
         </p>
         <p class="detail">
-          LinkedIn: <span class="hover-to-view magic-underline">{{ MY_LINKEDIN }}</span>
+          LinkedIn:
+          <a href="{{ MY_LINKEDIN }}">
+            <img src="{% static 'images/linkedin.png' %}" alt="">
+          </a>
+        </p>
+        <p class="detail">
+          Github:
+          <a href="{{ MY_GITHUB }}">
+            <img src="{% static 'images/github.png' %}" alt="">
+          </a>
         </p>
         <p class="detail"></p>
       </div>
