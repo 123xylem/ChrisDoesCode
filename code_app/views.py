@@ -16,7 +16,7 @@ from .utils import *
 
 logger = logging.getLogger(__name__)
 
-LEET_STATS_URL = config('LEET_STATS_URL')
+# LEET_STATS_URL = config('LEET_STATS_URL')
 class codePage(TemplateView):
     template_name = "code_app/code_page.html"
     
@@ -41,10 +41,7 @@ class codePage(TemplateView):
         for sub in submissions:
             sub.question = clean_text(sub.question)
             sub.answer = clean_text(sub.answer, True)
-            # print(sub.answer)
-        
+            print(sub.title)
         return {'leetcode_meta':formatted_meta, 'submissions': submissions}
         # https://alfa-leetcode-api.onrender.com/G4ZHY5D2Ti/acSubmission
         # https://leetcode-stats-api.herokuapp.com/G4ZHY5D2Ti
-
-# {'count': 12, 'submission': [{'title': 'Majority Element', 'titleSlug': 'majority-element', 'timestamp': '1724143474', 'statusDisplay': 'Accepted', 'lang': 'python3'}, {'title': 'Top K Frequent Elements', 'titleSlug': 'top-k-frequent-elements', 'timestamp': '1723037216', 'statusDisplay': 'Accepted', 'lang': 'python3'}, {'title': 'Valid Sudoku', 'titleSlug': 'valid-sudoku', 'timestamp': '1722865967', 'statusDisplay': 'Accepted', 'lang': 'python3'}, {'title': 'Product of Array Except Self', 'titleSlug': 'product-of-array-except-self', 'timestamp': '1722853642', 'statusDisplay': 'Accepted', 'lang': 'python3'}, {'title': 'Top K Frequent Elements', 'titleSlug': 'top-k-frequent-elements', 'timestamp': '1722507056', 'statusDisplay': 'Accepted', 'lang': 'python3'}, {'title': 'Group Anagrams', 'titleSlug': 'group-anagrams', 'timestamp': '1722459132', 'statusDisplay': 'Accepted', 'lang': 'python3'}, {'title': 'Remove Element', 'titleSlug': 'remove-element', 'timestamp': '1722436160', 'statusDisplay': 'Accepted', 'lang': 'python3'}, {'title': 'Valid Anagram', 'titleSlug': 'valid-anagram', 'timestamp': '1722431381', 'statusDisplay': 'Accepted', 'lang': 'python'}, {'title': 'Majority Element', 'titleSlug': 'majority-element', 'timestamp': '1722420680', 'statusDisplay': 'Accepted', 'lang': 'python'}, {'title': 'Two Sum', 'titleSlug': 'two-sum', 'timestamp': '1722417623', 'statusDisplay': 'Accepted', 'lang': 'python'}, {'title': 'Contains Duplicate', 'titleSlug': 'contains-duplicate', 'timestamp': '1722242821', 'statusDisplay': 'Accepted', 'lang': 'python'}, {'title': 'Concatenation of Array', 'titleSlug': 'concatenation-of-array', 'timestamp': '1722241853', 'statusDisplay': 'Accepted', 'lang': 'python'}]}

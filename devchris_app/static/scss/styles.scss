@@ -224,6 +224,14 @@ video.bg-video {
   object-fit: cover;
 }
 
+video::-webkit-media-controls {
+  display: none !important;
+}
+
+video::-webkit-media-controls-play-button {
+  display: none !important;
+}
+
 .with-img-right img {
   max-width: 300px;
   margin-left: 1rem;
@@ -356,7 +364,7 @@ figure img {
 // CV PAGE
 .cv-modal {
   background: white;
-  box-shadow: 7px 2px 5px 1px #827a7a;
+  box-shadow: 7px 2px 15px -1px #827a7a;
   max-width: 651px;
   margin: auto;
   > * {
