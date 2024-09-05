@@ -6,7 +6,7 @@ logger = logging.getLogger(__name__)
 logging.shutdown()
 
 class FetchSubmissionsCronJob(CronJobBase):
-    RUN_EVERY_MINS = 1  # 70 hours
+    RUN_EVERY_MINS = 2500 #every 2 days
 
     schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
     code = 'devchris_app.fetchSubmissions'
