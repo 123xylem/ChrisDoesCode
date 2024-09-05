@@ -164,7 +164,7 @@ LOGGING = {
         },
         '': {  # Root logger
             'handlers': ['file'],
-            'level': 'WARNING',
+            'level': 'INFO',
             'propagate': True,
         },
     },

@@ -3,6 +3,7 @@ import base64, requests, logging, time
 from .models import Submission, SubmissionMeta
 from datetime import datetime
 from django.utils import timezone
+# from .utils import *
 
 logger = logging.getLogger(__name__)
 
@@ -33,12 +34,13 @@ def getQaDataFromFiles(file_dir, filename):
 
 # Repo Sub Retrieval
 def addSubmissionsToDbOnMetaMatch(submissions:list):
+    print('3')
     for q_a in submissions:
         for k, v in q_a.items():
             k = ''.join([char for char in k if char.isalpha() or char == '-'])
             title = ' '.join([word.capitalize() for word in k.split('-')]).strip()
-            question = v[0]
-            answer = v[1]
+            question = v[0].decode('utf-8')
+            answer = v[1].decode('utf-8')
             submissions_to_update = Submission.objects.filter(title=title, needsUpdate=True)
             # Check if any submissions are found
             if submissions_to_update.exists():
@@ -47,19 +49,9 @@ def addSubmissionsToDbOnMetaMatch(submissions:list):
             else: 
                 logger.info(f"{title} doesnt need update")
 
-def retrieveSubmissionsFromRepo(max_count=1000):
-    count = 1
-    r = requests.get(subs_url, headers=headers)
-    submission_folder_urls = []
-    for submission_folder in r.json():
-        file_dir = submission_folder['name']
-        submission_folder_urls.append(file_dir)
-        count += 1
-        if count > max_count:
-            break
-    retrieveQandAsFromSubmission(submission_folder_urls)
 
 def retrieveQandAsFromSubmission(submission_folder_urls: list) -> list:
+    print('2')
     q_and_as = []
     for sub_files in submission_folder_urls:
         question_data = getQaDataFromFiles(sub_files, 'README.md')
@@ -69,66 +61,93 @@ def retrieveQandAsFromSubmission(submission_folder_urls: list) -> list:
             answer = validateQaData(answer_data)
             if answer and question:
                 q_and_as.append({sub_files:[question, answer]})
-
     if q_and_as:
         addSubmissionsToDbOnMetaMatch(q_and_as)
 
-# META Retrieval
-def createSubmissionFromMeta(submissions:list):
-    # print(submissions)
-    for sub in submissions:
-        new_title = sub['title']
-        new_date = sub['timestamp']
-        date_and_zone = timezone.make_aware(new_date)
-        submission.submitted_date = date_and_zone
+def retrieveSubmissionsFromRepo(max_count=1000):
+    print('1')
+    count = 1
+    r = requests.get(subs_url, headers=headers)
+    submission_folder_urls = []
+    for submission_folder in r.json():
+        file_dir = submission_folder['name']
+        submission_folder_urls.append(file_dir)
+        count += 1
+        if count > max_count:
+            break
+    if len(submission_folder_urls) > len(Submission.objects.all()):
+        logger.info(f"Getting {len(submission_folder_urls) - len(Submission.objects.all())} more submission(s)")
 
-        try:
-            submission = Submission.objects.get(title=new_title)
-            if submission.submitted_date != new_date:
-                submission.submitted_date = new_date
-                submission.needsUpdate = True
-                submission.save()
-            else:
-                # The data is identical; no need to update
-                logger.info("No update needed, data is identical")
-        except Submission.DoesNotExist:
-            submission = Submission.objects.create(
-                title=new_title,
-                submitted_date=new_date
-            )
+    retrieveQandAsFromSubmission(submission_folder_urls)
+    return ['Subs from Repo: ', len(submission_folder_urls)]
+
+
+# META Retrieval
+def createSubmissionFromMeta(submissions_list:list):
+    print( f"{time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())} : Attempt to create")
+    try:
+        for sub in submissions_list:
+            fetched_title = sub['title']
+            fetched_date = sub['timestamp']
+            formatted_fetch_date = timezone.make_aware(fetched_date)
+            found_submission = Submission.objects.filter(title=fetched_title).first()
+            if not found_submission: #Create if not found
+                print(fetched_title, ' being created')
+                Submission.objects.create(
+                    title=fetched_title,
+                    submitted_date=formatted_fetch_date
+                )   
+                logger.warning(f"{time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())} Created {fetched_title}")
+
+            else: #Update if Submission date newer
+                if found_submission.submitted_date != formatted_fetch_date:
+                    found_submission.submitted_date = formatted_fetch_date
+                    found_submission.needsUpdate = True
+                    found_submission.save()
+                else:
+                    # The data is identical; no need to update
+                    logger.warning(f"{time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())} No update needed, data is identical")
+    except Exception:
+        logger.warning(f"{time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())} Error at create from meta {submissions_list}")
 
 def filterSubmissionMeta(submissions:list):
     filtered_submissions = [sub for sub in submissions if sub['statusDisplay'] == 'Accepted']
     for submission in filtered_submissions:
         submission['timestamp'] = datetime.fromtimestamp(int(submission['timestamp']))
+    print('3')
+
     createSubmissionFromMeta(filtered_submissions)
 
 def retrieveSubmissionMetaFromLeetCode() -> list[dict]:
-        leet_meta = requests.get(SUB_META_URL)
-        if leet_meta.status_code == 200:
-                data = leet_meta.json()
-                if 'submissions' in data:
-                    submissions = data['submission']            
-                    filterSubmissionMeta(submissions)
-                else:
-                    logger.error(f"{time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())} No Meta submissions in data ", exc_info=True)
+    leet_meta = requests.get(SUB_META_URL)
+    if leet_meta.status_code == 200:
+        data = leet_meta.json()
+        if 'submission' in data:
+            submissions = data['submission']     
+            filterSubmissionMeta(submissions)
+        else:
+            logger.info(f"{time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())}, No Meta submissions in { data } ", exc_info=True)
+    else:
+        logger.error(f"{time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())} {leet_meta.status_code} response from Sub Meta URL", exc_info=True)
 
 
 
+# Just stats on total solved
 def retrieveLeetMetaStats():
     leetcode_summary = requests.get(LEET_STATS_URL)
     if leetcode_summary.status_code == 200:
-        data = leetcode_summary.json()  # Parse JSON response
-        # print(data)
-        prev_total = SubmissionMeta.objects.get(pk=5).total_solved
-        if not prev_total:
-            if 'totalSolved' in data:
-                try:
-                    obj, created = SubmissionMeta.objects.update_or_create(
-                        total_solved = 0,
-                        defaults={'total_solved': data['totalSolved'], 'easy_solved': data['easySolved'], 'medium_solved': data['mediumSolved'], 'hard_solved': data['hardSolved']},
-                    )
-                except Exception as e:
-                    logger.error(f"Error updating leetcodeMeta: {e}")
+        data = leetcode_summary.json() 
+        prev_total = SubmissionMeta.objects.filter(pk=5).first().total_solved # access the one object holding my subStats
+        if 'totalSolved' in data and data['totalSolved'] > prev_total: 
+            try:
+                obj, created = SubmissionMeta.objects.update_or_create(
+                    pk = 5,
+                    defaults={'total_solved': data['totalSolved'], 'easy_solved': data['easySolved'], 'medium_solved': data['mediumSolved'], 'hard_solved': data['hardSolved']},
+                )
+                return ['Total Solved: ', data['totalSolved']]
 
-retrieveLeetMetaStats()
+            except Exception as e:
+                logger.error(f"Error updating leetcodeMeta: {e}")
+        else:
+            logger.info(f"{time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())} No new solved questions {prev_total}")
+            return 'Total Solved hasnt increased'
