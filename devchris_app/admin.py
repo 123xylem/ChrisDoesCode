@@ -23,23 +23,32 @@ class SkillAdmin(admin.ModelAdmin):
 
 admin.site.register(Skill, SkillAdmin)
 
+@admin.action(description="Toggle Published Status")
+def make_published(modeladmin, request, queryset):
+    for q in queryset:
+      q.is_published = not q.is_published
+      q.save()
+
 class ProjectAdmin(admin.ModelAdmin):
-  list_display = ["title", "link", "image_preview"]
+  list_display = ["title", "link", "image_preview", "is_published"]
   readonly_fields = ['image_preview']
   autocomplete_fields = ['related_skill']
+  actions = [make_published]
 
   fieldsets = [
-    (None, {"fields": ["title", "description", "link", "related_skill", "img", "image_preview"]})
+    (None, {"fields": ["title", "description", "link", "related_skill", "img", "image_preview", "is_published"]})
   ]
 
 admin.site.register(Project, ProjectAdmin)
 
 
 class ContentAdmin(admin.ModelAdmin):
-  list_display = ["title",  "image_preview", "custom_class"]
+  list_display = ["title",  "image_preview", "custom_class", "is_published"]
   readonly_fields = ['image_preview']
+  actions = [make_published]
+
   fieldsets = [
-    (None, {"fields": ["title", "content",  "img", "wyzywig_content", "image_preview", "custom_class"]})
+    (None, {"fields": ["title", "content",  "img", "wyzywig_content", "image_preview","published", "custom_class"]})
   ]
 
 admin.site.register(Content, ContentAdmin)

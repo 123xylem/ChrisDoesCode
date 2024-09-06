@@ -3,7 +3,6 @@ import logging
 from django_cron import CronJobBase, Schedule
 from code_app.code_submissions import retrieveSubmissionMetaFromLeetCode, retrieveSubmissionsFromRepo, retrieveLeetMetaStats
 logger = logging.getLogger(__name__)
-logging.shutdown()
 
 class FetchSubmissionsCronJob(CronJobBase):
     RUN_EVERY_MINS = 2500 #every 2 days
@@ -19,7 +18,7 @@ class FetchSubmissionsCronJob(CronJobBase):
             subs = retrieveSubmissionsFromRepo()
             time.sleep(2)
             leet_stats = retrieveLeetMetaStats()
-            logger.warning(f"DATA FROM FETCH \n \n Submissions:  {subs} \n Leet Stats: {leet_stats}", exc_info=True)
+            logger.info(f"DATA FROM FETCH \n \n Submissions:  {subs} \n Leet Stats: {leet_stats}", exc_info=True)
 
         except Exception as e:
             logger.error(f"Error fetching data: {str(e)} \n meta: {sub_meta} \n Submissions:  {subs} \n Leet Stats: {leet_stats}", exc_info=True)

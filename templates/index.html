@@ -7,8 +7,6 @@
       {% for content in about_me %}
         <!-- <h2 class="site-heading">{{ content.title }}</h2> -->
         <div class="inner-content">
-          <!-- <video class="bg-video" src="{% static 'media/coding.mp4' %}" type="video/mp4" autoplay muted>
-          </video> -->
           <div class="content-row column">
             <p>{{ content.wyzywig_content|safe }}</p>
           </div>
@@ -22,24 +20,26 @@
 ========================-->
   {% if project_list %}
     <div class="projects-section section">
-      <h2 class="site-heading">My Projects</h2>
+      <h2 class="site-heading">Projects</h2>
       <div class="project-grid grid-container">
         {% for project in project_list %}
-          <a class="project grid-item magic-underline black"
-             href="{{ project.link }}">
-            <h3 class="project-title">{{ project.title }}</h3>
-            <p class="project-description">{{ project.description }}</p>
-            <img class="project-thumbnail img-small"
-                 src="{{ project.img.url }}"
-                 alt="">
-            <div class="related-skills">
-              {% for skill in project.related_skill.all %}
-                <p>{{ skill }}</p>
-              {% empty %}
-                <li>No skills used on this project.</li>
-              {% endfor %}
-            </div>
-          </a>
+          {% if project.is_published %}
+            <a class="project grid-item magic-underline black"
+               href="{{ project.link }}">
+              <h3 class="project-title">{{ project.title }}</h3>
+              <p class="project-description">{{ project.description }}</p>
+              <img class="project-thumbnail img-small"
+                   src="{{ project.img.url }}"
+                   alt="">
+              <div class="related-skills">
+                {% for skill in project.related_skill.all %}
+                  <p>{{ skill }}</p>
+                {% empty %}
+                  <li>No skills used on this project.</li>
+                {% endfor %}
+              </div>
+            </a>
+          {% endif %}
         {% endfor %}
       </div>
     </div>

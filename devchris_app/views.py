@@ -26,19 +26,22 @@ class index(TemplateView):
         context['about_me'] = Content.objects.filter(title='About Me')
         context['testimonials'] = Content.objects.filter(title__startswith="Testimonial")
         context['homepage'] = True
+        context['page_title'] = 'Home'
         return context
 
 
 
 def about(request):
     context = {
-        'about_content': Content.objects.filter(title__startswith="About part")
+        'about_content': Content.objects.filter(title__startswith="About part"),
+        'page_title' : 'About'
     }
     return render(request, 'base.html', context)
       
 def cv(request):
     context = {
-        'cv_content': Content.objects.filter(title="CV")
+        'cv_content': Content.objects.filter(title="CV"),
+        'page_title' : "CV"
     }
     return render(request, 'base.html', context)
 

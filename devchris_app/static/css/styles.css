@@ -116,6 +116,11 @@ ul.main-nav li {
 }
 
 ul.main-nav li:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+ul.main-nav li:hover {
   cursor: pointer;
 }
 
@@ -144,7 +149,7 @@ ul.main-nav li:hover {
 
 /* Sections */
 .section {
-  padding: 2rem;
+  padding: 1rem 2rem;
   margin: 0 auto;
   max-width: 1200px;
 }
@@ -243,7 +248,8 @@ to {
   text-align: left;
 }
 
-video.bg-video {
+video.bg-video,
+.logo-bg {
   position: absolute;
   top: 0;
   left: 0;
@@ -260,6 +266,10 @@ video::-webkit-media-controls {
 }
 
 video::-webkit-media-controls-play-button {
+  display: none !important;
+}
+
+video::-webkit-media-controls-start-playback-button {
   display: none !important;
 }
 
@@ -296,7 +306,7 @@ video::-webkit-media-controls-play-button {
 }
 
 .grid-container .grid-item {
-  flex: 1 1 calc(33% - 1rem);
+  flex: 1 1 calc(33% - 5rem);
   background-color: #f9f9f9;
   padding: 2rem;
   border-radius: 10px;
@@ -317,11 +327,24 @@ video::-webkit-media-controls-play-button {
 
 .grid-container .grid-item h3 {
   margin-top: 0;
+  line-height: 1.1;
 }
 
 .grid-container .grid-item:hover {
   transform: scale(1.001);
   box-shadow: 5px 2px 15px #417691;
+}
+
+@media (max-width: 940px) {
+  .grid-container .grid-item {
+    flex-basis: calc(50% - 5rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-container .grid-item {
+    flex-basis: 100%;
+  }
 }
 
 .project-description {
@@ -330,14 +353,15 @@ video::-webkit-media-controls-play-button {
 
 .project img {
   width: 100%;
-  max-width: 300px;
+  max-width: 100px;
   height: auto;
-  max-height: 150px;
+  max-height: 80px;
   border-radius: 10px;
+  display: none;
 }
 
 .related-skills {
-  margin: 0.5rem 0 0;
+  margin: auto 0 0 0;
 }
 
 .related-skills p {
@@ -345,7 +369,7 @@ video::-webkit-media-controls-play-button {
   background-color: #4caf50;
   color: white;
   padding: 2px 7px;
-  margin: 5px;
+  margin: 8px 0 0;
   border-radius: 5px;
   font-size: 0.7rem;
 }
@@ -489,19 +513,19 @@ figure img {
 /* Responsiveness */
 @media (min-width: 768px) {
   .mob-only {
-    display: none;
+    display: none !important;
   }
   .dt-only {
-    display: none;
+    display: inherit;
   }
 }
 
 @media (max-width: 768px) {
   .mob-only {
-    display: flex;
+    display: inherit;
   }
   .dt-only {
-    display: flex;
+    display: none;
   }
   .aboutme-section {
     flex-direction: column;

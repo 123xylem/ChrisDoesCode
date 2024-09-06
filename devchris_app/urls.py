@@ -22,13 +22,9 @@ if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
 
 #TODO://
-# HTML markup of About page
-# HTML markup of Courses page
-# HTML markup of CV page
-# Add projects and correct content
 # Add field for foreignKey Category for content on pages
 # Add Email Form
-# get images of projects
+# get images of projects & links to projects 
 # Deploy live
 
 #DONE ----------- Show image preview on upload
@@ -55,7 +51,9 @@ if settings.DEBUG:
     # Model Leet Meta instead of request each time
     # # display Answers + Style
     # Add footer Contact
-
-    1,1,1,1
-
-
+    # make False show as tick for needsUpdate and change display title of it
+    # HTML markup of About page
+    # HTML markup of Courses page
+    # HTML markup of CV page
+    # Add projects and correct content
+    # retrieve page titles here for each page via views 

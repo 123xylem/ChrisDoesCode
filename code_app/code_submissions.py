@@ -28,13 +28,11 @@ def getQaDataFromFiles(file_dir, filename):
         data = requests.get(subs_url+'/'+file_dir+'/'+filename, headers=headers)
     if data.status_code != 200:
         logger.error(f"Error finding submission file in repo - not a .py or .js solution", exc_info=True)
-
     return data
 
 
 # Repo Sub Retrieval
 def addSubmissionsToDbOnMetaMatch(submissions:list):
-    print('3')
     for q_a in submissions:
         for k, v in q_a.items():
             k = ''.join([char for char in k if char.isalpha() or char == '-'])
@@ -46,12 +44,9 @@ def addSubmissionsToDbOnMetaMatch(submissions:list):
             if submissions_to_update.exists():
                 logger.info(f"Updating submission with title: {title}")
                 submissions_to_update.update(question=question, answer=answer, needsUpdate=False)
-            else: 
-                logger.info(f"{title} doesnt need update")
 
 
 def retrieveQandAsFromSubmission(submission_folder_urls: list) -> list:
-    print('2')
     q_and_as = []
     for sub_files in submission_folder_urls:
         question_data = getQaDataFromFiles(sub_files, 'README.md')
@@ -65,7 +60,6 @@ def retrieveQandAsFromSubmission(submission_folder_urls: list) -> list:
         addSubmissionsToDbOnMetaMatch(q_and_as)
 
 def retrieveSubmissionsFromRepo(max_count=1000):
-    print('1')
     count = 1
     r = requests.get(subs_url, headers=headers)
     submission_folder_urls = []
@@ -84,7 +78,7 @@ def retrieveSubmissionsFromRepo(max_count=1000):
 
 # META Retrieval
 def createSubmissionFromMeta(submissions_list:list):
-    print( f"{time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())} : Attempt to create")
+    logger.info( f"{time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())} : Attempting to create subs from meta")
     try:
         for sub in submissions_list:
             fetched_title = sub['title']
@@ -104,11 +98,8 @@ def createSubmissionFromMeta(submissions_list:list):
                     found_submission.submitted_date = formatted_fetch_date
                     found_submission.needsUpdate = True
                     found_submission.save()
-                else:
-                    # The data is identical; no need to update
-                    logger.warning(f"{time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())} No update needed, data is identical")
     except Exception:
-        logger.warning(f"{time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())} Error at create from meta {submissions_list}")
+        logger.warning(f"{time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())} Error in createSubmissionFromMeta {submissions_list}")
 
 def filterSubmissionMeta(submissions:list):
     filtered_submissions = [sub for sub in submissions if sub['statusDisplay'] == 'Accepted']
