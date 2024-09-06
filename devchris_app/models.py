@@ -34,10 +34,7 @@ class ImageMixinClass():
 class titleMixinClass():
     def __str__(self):
       return self.title
-
-
-
-# Text UL Image - for HomePage skills
+    
 class Skill(ImageMixinClass, titleMixinClass, models.Model):
     title = models.CharField(max_length=300, default="title")
     # img = models.ImageField(upload_to=get_upload_path)
@@ -54,8 +51,7 @@ class Project(models.Model, ImageMixinClass, titleMixinClass):
     link = models.CharField(max_length=300, null=True, blank=True)
     img = models.ImageField(upload_to=get_upload_path)
     related_skill = models.ManyToManyField(Skill, blank=True)
-    # models.ManyToManyField(related_query_name='title')
-    # related_skill = models.ForeignKey(Skill, on_delete=models.CASCADE, null=True, blank=True)
+    is_published = models.BooleanField(default=False)
 
 
 # // TEXT/ IMAGES - For: About Me - Testimonials
@@ -65,6 +61,8 @@ class Content(models.Model, ImageMixinClass, titleMixinClass):
   wyzywig_content = CKEditor5Field('Text', config_name='extends')
   img = models.ImageField(upload_to=get_upload_path, null=True, blank=True)
   custom_class = models.CharField(max_length=300, null=True, blank=True)
+  is_published = models.BooleanField(default=False)
+
 
 class SkillProof(models.Model):
   skill = models.ForeignKey(Skill, on_delete=models.CASCADE, related_name='proofs')

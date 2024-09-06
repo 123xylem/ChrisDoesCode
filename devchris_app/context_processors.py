@@ -1,5 +1,8 @@
 from .models import Page
 from django.conf import settings
+import logging
+
+logger = logging.getLogger(__name__)
 
 def published_pages(request):
     pages = Page.objects.filter(is_published=True)

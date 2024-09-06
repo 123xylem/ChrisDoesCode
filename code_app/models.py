@@ -7,7 +7,7 @@ class Submission(models.Model):
   submitted_date = models.DateTimeField()
   title = models.CharField(max_length=250)
   slug = models.CharField(max_length=100)
-  needsUpdate = models.BooleanField(default=True)
+  needsUpdate = models.BooleanField(default=True, verbose_name="Up to Date")
 
   def __str__(self):
     return self.title

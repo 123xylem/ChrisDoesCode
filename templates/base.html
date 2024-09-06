@@ -9,9 +9,8 @@
           type="image/png"
           sizes="32x32"
           href="{% static 'favicon-32x32.png' %}">
-    <!-- #TODO retrieve page titles here for each page via views -->
     <title>
-      {% block title %}{{ title }}Chris Codes{% endblock %}
+      {% block title %}{{ page_title }} | Chris Codes{% endblock %}
     </title>
     <link rel="stylesheet" href="{% static 'admin/css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
@@ -70,15 +69,17 @@
         <!-- END Header -->
         {% block chris-nav %}
           <div class="chris-nav">
-            <div id="site-name" style="position: relative;" onclick="goHome()">
-              <video class="bg-video"
+            <div id="site-name" style="position: relative" onclick="goHome()">
+              <video class="bg-video dt-only"
                      src="{% static 'media/coding.mp4' %}"
                      type="video/mp4"
                      autoplay
                      loop
-                     muted
-                     controls="false">
+                     muted>
               </video>
+              <img class="mob-only logo-bg"
+                   src="{% static 'images/logobg.png' %}"
+                   alt="">
               <h1>Chris Codes</h1>
             </div>
             <nav aria-label="{% translate 'Breadcrumbs' %}">

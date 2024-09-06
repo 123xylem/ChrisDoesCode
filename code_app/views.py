@@ -42,6 +42,6 @@ class codePage(TemplateView):
             sub.question = clean_text(sub.question)
             sub.answer = clean_text(sub.answer, True)
             print(sub.title)
-        return {'leetcode_meta':formatted_meta, 'submissions': submissions}
+        return {'leetcode_meta':formatted_meta, 'submissions': submissions, 'page_title': 'Data Structures & Algortithms'}
         # https://alfa-leetcode-api.onrender.com/G4ZHY5D2Ti/acSubmission
         # https://leetcode-stats-api.herokuapp.com/G4ZHY5D2Ti
