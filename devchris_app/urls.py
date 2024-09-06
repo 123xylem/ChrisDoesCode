@@ -12,6 +12,7 @@ urlpatterns = [
     path('code-with-me/', include('code_app.urls')),
     path("about/", views.about, name="about"),
     path("dashboard/", views.dashboard, name="dashboard"),
+    path("contact-me/", views.contactMe, name="contact-me"),
     path("admin/", admin.site.urls),
     path("ckeditor5/", include('django_ckeditor_5.urls')),
 ] + debug_toolbar_urls()
@@ -21,9 +22,11 @@ if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
 
-#TODO://
+#TODO://Low prio:
 # Add field for foreignKey Category for content on pages
-# Add Email Form
+# Add captcha to email
+# High Prio
+# setup email server
 # get images of projects & links to projects 
 # Deploy live
 
@@ -57,3 +60,4 @@ if settings.DEBUG:
     # HTML markup of CV page
     # Add projects and correct content
     # retrieve page titles here for each page via views 
+# Add Email Form

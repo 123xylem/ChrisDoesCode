@@ -1,7 +1,7 @@
 from .models import Page
 from django.conf import settings
 import logging
-
+from .forms import contactMeForm
 logger = logging.getLogger(__name__)
 
 def published_pages(request):
@@ -14,3 +14,7 @@ def site_details(request):
     'MY_LINKEDIN': settings.MY_LINKEDIN,
     'MY_GITHUB': settings.MY_GITHUB,
     }
+
+def contact_form_init(request):
+    contact_form = contactMeForm()
+    return {'contact_form' : contact_form }
