@@ -94,6 +94,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'devchris_app.context_processors.published_pages',
                 'devchris_app.context_processors.site_details',
+                'devchris_app.context_processors.contact_form_init',
             ],
         },
     },
@@ -196,6 +197,13 @@ INTERNAL_IPS = [
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = 'email_logs/'  
+
+if DEBUG:
+    SECURE_CROSS_ORIGIN_OPENER_POLICY = None
 
 
 customColorPalette = [

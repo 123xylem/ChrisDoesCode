@@ -6,9 +6,6 @@
       <h3>Get in touch!</h3>
       <div class="my-details">
         <p class="detail">
-          Email: <span class="hover-to-view">{{ MY_EMAIL }}</span>
-        </p>
-        <p class="detail">
           LinkedIn:
           <a href="{{ MY_LINKEDIN }}">
             <img src="{% static 'images/linkedin.png' %}" alt="">
@@ -22,6 +19,19 @@
         </p>
         <p class="detail"></p>
       </div>
+      <form id="my-contact-form" action="/contact-me/" method="post">
+        <input type="hidden" name="next" value="{{ request.path }}">
+        {% csrf_token %}
+        {% for field in contact_form %}
+          <div class="form-group {{ field.label }}">
+            {{ field }}
+            {% if field.help_text %}<small class="form-text text-muted">{{ field.help_text }}</small>{% endif %}
+            {% if field.errors %}<div class="text-danger">{{ field.errors }}</div>{% endif %}
+          </div>
+        {% endfor %}
+        <div id="form-message"></div>
+        <input class="submit-button" type="submit" value="Submit">
+      </form>
       <p class="copyright">All Rights Reserved - Chris Codes &copy;</p>
     </div>
   </div>

@@ -143,40 +143,9 @@
         {% endblock %}
       </footer>
     </div>
-    <script>
-      function toggleMenu() {
-        document.querySelector('.main-nav').classList.toggle('active');
-      }
-      function goHome(){
-        window.location.href = '/'
-      }
-      anchor = document.querySelector('.back-to-top')
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
-    });
-    function pauseVideo(video) {
-            if (video) {
-                video.pause();
-            }
-        }
-
-        function pauseVideoOnScroll() {
-            var video = document.querySelector('.bg-video');
-            if (video) {
-                video.pause();
-            }
-        }
-
-        // Attach event listener to the scroll event
-        window.addEventListener('scroll', pauseVideoOnScroll, { passive: true });
-
-    </script>
     <!-- END Container -->
     <!-- SVGs -->
+    <script src="{% static 'js/main.js'%}"></script>
     <svg xmlns="http://www.w3.org/2000/svg" class="base-svgs">
       <symbol viewBox="0 0 24 24" width="1rem" height="1rem" id="icon-auto">
       <path d="M0 0h24v24H0z" fill="currentColor" />

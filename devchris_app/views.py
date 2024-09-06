@@ -1,11 +1,16 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, FileResponse
 from django.urls import reverse
 from django.views import generic
 from devchris_app.models import *
 from django.template.loader import render_to_string
-import json
+
+from .forms import contactMeForm
+from django.core.mail import send_mail
+import logging
+
+logger = logging.getLogger(__name__)
 
 from django.views.generic import (
     TemplateView,
@@ -16,9 +21,46 @@ from django.views.generic import (
     DetailView
 )
 
+
+
+def contactMe(request):
+    if request.method == "POST":
+        # create a form instance and populate it with data from the request:
+        form = contactMeForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            name = form.cleaned_data["name"]
+            message = form.cleaned_data["message"]
+            email = form.cleaned_data["email"]
+            # cc_myself = form.cleaned_data["cc_myself"]
+            subject = f'Django message from: {name}'
+            next = request.POST.get('next', '/')
+
+            recipients = ["info@example.com"]
+            try:
+                send_mail(subject, message, email, recipients)
+                data = {
+                    'headers': {
+                        'status': 200,
+                    },
+                    'success': True,
+                    'message': 'Thank you for your message',
+                    'status': 'ok'
+                }
+                return JsonResponse(data, status=200)
+
+            except Exception as e:
+                logger.error(f'Error sending mail, {e} Data: {subject, message, email, recipients}')
+                return e
+            # print(request)
+            # for i in request:
+            #     print(i)
+            return HttpResponseRedirect(next)
+        else:
+            return form
 class index(TemplateView):
     template_name = "index.html"
-
+    
     def get_context_data(self, **kwargs):    
         context = super().get_context_data(**kwargs)
         context['skill_list'] = Skill.objects.all()
@@ -50,6 +92,8 @@ def cvDownload(request):
     response = HttpResponse(cv_content, content_type="text/html")
     response["Content-Disposition"] = 'attachment; filename="chris-cv.doc"'
     return response
+
+
 
 def dashboard(request):
     return HttpResponse("Hello, world. You're at dashboard.")
