@@ -22,12 +22,14 @@ if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
 
-#TODO://Low prio:
+#TODO:
+# //Low prio:
 # Add field for foreignKey Category for content on pages
 # Add captcha to email
-# High Prio
-# setup email server
-# get images of projects & links to projects 
+# High Prio:
+# Setup email server
+# get images of projects &
+# links to projects 
 # Deploy live
 
 #DONE ----------- Show image preview on upload
