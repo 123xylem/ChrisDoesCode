@@ -31,6 +31,8 @@ if settings.DEBUG:
 # get images of projects &
 # links to projects 
 # Deploy live
+# Add media back with git pull
+# sync with live code
 
 #DONE ----------- Show image preview on upload
     #  ------------ Apply to all image fields ^
