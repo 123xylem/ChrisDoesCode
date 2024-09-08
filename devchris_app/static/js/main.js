@@ -1,4 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
+  burger = document.querySelector(".hamburger");
+  navClose = document.querySelector(".nav-close");
+  if (burger) {
+    burger.addEventListener("click", toggleMenu);
+  }
+  if (navClose) {
+    navClose.addEventListener("click", toggleMenu);
+  }
+
   function toggleMenu() {
     document.querySelector(".main-nav").classList.toggle("active");
   }

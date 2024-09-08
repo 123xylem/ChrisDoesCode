@@ -85,13 +85,13 @@
             <nav aria-label="{% translate 'Breadcrumbs' %}">
               {% block breadcrumbs %}
                 <div class="breadcrumbs">
-                  <div class="hamburger" onclick="toggleMenu()">
+                  <div class="hamburger">
                     <div class="line"></div>
                     <div class="line"></div>
                     <div class="line"></div>
                   </div>
                   <ul class="main-nav">
-                    <div class="close-nav mob-only" onclick="toggleMenu()">
+                    <div class="close-nav mob-only">
                       <a href="#">X</a>
                     </div>
                     {% if user.is_authenticated %}
