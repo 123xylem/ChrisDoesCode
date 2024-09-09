@@ -43,10 +43,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['192.168.1.55', '0.0.0.0']
 
 
 # Application definition
@@ -74,6 +70,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.template.context_processors.media',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -202,8 +199,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = 'email_logs/'  
 
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
 if DEBUG:
     SECURE_CROSS_ORIGIN_OPENER_POLICY = None
+    ALLOWED_HOSTS = ['192.168.1.55', '0.0.0.0', '127.0.0.1']
 
 
 customColorPalette = [

@@ -48,7 +48,7 @@ class ContentAdmin(admin.ModelAdmin):
   actions = [make_published]
 
   fieldsets = [
-    (None, {"fields": ["title", "content",  "img", "wyzywig_content", "image_preview","published", "custom_class"]})
+    (None, {"fields": ["title", "content",  "img", "wyzywig_content", "image_preview","is_published", "custom_class"]})
   ]
 
 admin.site.register(Content, ContentAdmin)

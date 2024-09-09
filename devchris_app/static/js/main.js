@@ -1,11 +1,16 @@
 document.addEventListener("DOMContentLoaded", function () {
   burger = document.querySelector(".hamburger");
-  navClose = document.querySelector(".nav-close");
+  navClose = document.querySelector(".close-nav");
+  logoDiv = document.getElementById("site-name");
   if (burger) {
     burger.addEventListener("click", toggleMenu);
   }
   if (navClose) {
     navClose.addEventListener("click", toggleMenu);
+  }
+
+  if (logoDiv) {
+    logoDiv.addEventListener("click", goHome);
   }
 
   function toggleMenu() {

@@ -8,7 +8,7 @@ from django_ckeditor_5.fields import CKEditor5Field
 
 
 def get_upload_path(instance, filename):
-    return 'static/images/{}/{}'.format(datetime.now().strftime('%Y/%m'), filename)
+    return 'images/{}/{}'.format(datetime.now().strftime('%Y/%m'), filename)
 
 class ImageMixinClass():
   def image_preview(self):
