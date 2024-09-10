@@ -16,8 +16,11 @@ from decouple import config
 
 SECRET_KEY = config('SECRET_KEY')
 MY_LINKEDIN = config('MY_LINKEDIN')
-MY_EMAIL = config('MY_EMAIL')
 MY_GITHUB = config('MY_GITHUB')
+EMAIL_HOST_NAME=config('EMAIL_HOST')
+EMAIL_PW=config('EMAIL_PW')
+EMAIL_USER=config('EMAIL_USER')
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -37,12 +40,6 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
-
 
 
 # Application definition
@@ -70,7 +67,6 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.template.context_processors.media',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -92,6 +88,8 @@ TEMPLATES = [
                 'devchris_app.context_processors.published_pages',
                 'devchris_app.context_processors.site_details',
                 'devchris_app.context_processors.contact_form_init',
+                'django.template.context_processors.media'
+
             ],
         },
     },
@@ -196,8 +194,15 @@ INTERNAL_IPS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-EMAIL_FILE_PATH = 'email_logs/'  
+# EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+# # EMAIL_FILE_PATH = 'email_logs/'  
+EMAIL_HOST= EMAIL_HOST_NAME
+EMAIL_PORT= 587
+EMAIL_USE_TLS= True
+EMAIL_HOST_USER= EMAIL_USER
+EMAIL_HOST_PASSWORD= EMAIL_PW
 
 
 # SECURITY WARNING: don't run with debug turned on in production!

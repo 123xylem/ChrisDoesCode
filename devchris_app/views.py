@@ -5,13 +5,14 @@ from django.urls import reverse
 from django.views import generic
 from devchris_app.models import *
 from django.template.loader import render_to_string
+from decouple import config
 
 from .forms import contactMeForm
 from django.core.mail import send_mail
 import logging
 
 logger = logging.getLogger(__name__)
-
+EMAIL_USER = config('EMAIL_USER')
 from django.views.generic import (
     TemplateView,
     DetailView,
@@ -20,8 +21,6 @@ from django.views.generic import (
     UpdateView,
     DetailView
 )
-
-
 
 def contactMe(request):
     if request.method == "POST":
@@ -32,32 +31,40 @@ def contactMe(request):
             name = form.cleaned_data["name"]
             message = form.cleaned_data["message"]
             email = form.cleaned_data["email"]
-            # cc_myself = form.cleaned_data["cc_myself"]
-            subject = f'Django message from: {name}'
+
+            subject = f'Django blog message from: {name} - {email}'
             next = request.POST.get('next', '/')
 
-            recipients = ["info@example.com"]
+            recipients = [EMAIL_USER]
             try:
-                send_mail(subject, message, email, recipients)
-                data = {
-                    'headers': {
-                        'status': 200,
-                    },
-                    'success': True,
-                    'message': 'Thank you for your message',
-                    'status': 'ok'
-                }
-                return JsonResponse(data, status=200)
+                if send_mail(subject, message, email, recipients):
+                    data = {
+                        'headers': {
+                            'status': 200,
+                        },
+                        'success': True,
+                        'message': 'Thank you for your message',
+                        'status': 'ok'
+                    }
+                    return JsonResponse(data, status=200)
+                else:
+                    data = {
+                        'headers': {
+                            'status': 500,
+                        },
+                        'success': False,
+                        'message': 'Failed to send your message',
+                        'status': 'error'
+                    }
+                    return JsonResponse(data, status=500)
 
             except Exception as e:
-                logger.error(f'Error sending mail, {e} Data: {subject, message, email, recipients}')
-                return e
-            # print(request)
-            # for i in request:
-            #     print(i)
-            return HttpResponseRedirect(next)
+                logger.error(f'Error sending mail, {e} Data: {subject, message, {EMAIL_USER}, recipients}')
+                return JsonResponse({'error': str(e)}, status=500)
         else:
-            return form
+            return JsonResponse({'error': 'Invalid form data'}, status=400)
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
+        
 class index(TemplateView):
     template_name = "index.html"
     
