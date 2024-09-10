@@ -430,6 +430,12 @@ figure img {
   padding: 0 2rem;
 }
 
+@media (max-width: 768px) {
+  .cv-modal > * {
+    padding: 0 1rem;
+  }
+}
+
 .cv-modal {
   position: relative;
 }

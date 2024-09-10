@@ -387,6 +387,9 @@ figure img {
   > * {
     color: black;
     padding: 0 2rem;
+    @media (max-width: 768px) {
+      padding: 0 1rem;
+    }
   }
 }
 // CV DOWNLOAD
