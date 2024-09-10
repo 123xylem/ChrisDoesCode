@@ -13,11 +13,11 @@
       {% block title %}{{ page_title }} | Chris Codes{% endblock %}
     </title>
     <link rel="stylesheet" href="{% static 'admin/css/base.css' %}">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     {% block dark-mode-vars %}
-      <link rel="stylesheet" href="{% static "admin/css/dark_mode.css" %}">
-      <script src="{% static "admin/js/theme.js" %}"></script>
+      <!-- <link rel="stylesheet" href="{% static "admin/css/dark_mode.css" %}">
+      <script src="{% static "admin/js/theme.js" %}"></script> -->
     {% endblock %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     {% block extrastyle %}{% endblock %}
     {% if LANGUAGE_BIDI %}
       <link rel="stylesheet" href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}">

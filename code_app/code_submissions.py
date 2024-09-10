@@ -105,7 +105,6 @@ def filterSubmissionMeta(submissions:list):
     filtered_submissions = [sub for sub in submissions if sub['statusDisplay'] == 'Accepted']
     for submission in filtered_submissions:
         submission['timestamp'] = datetime.fromtimestamp(int(submission['timestamp']))
-    print('3')
 
     createSubmissionFromMeta(filtered_submissions)
 
