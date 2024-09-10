@@ -26,13 +26,6 @@ if settings.DEBUG:
 # //Low prio:
 # Add field for foreignKey Category for content on pages
 # Add captcha to email
-# High Prio:
-# Setup email server
-# get images of projects &
-# links to projects 
-# Deploy live
-# Add media back with git pull
-# sync with live code
 
 #DONE ----------- Show image preview on upload
     #  ------------ Apply to all image fields ^
@@ -64,4 +57,10 @@ if settings.DEBUG:
     # HTML markup of CV page
     # Add projects and correct content
     # retrieve page titles here for each page via views 
-# Add Email Form
+    # Add Email Form
+    # Setup email server
+    # get images of projects &
+    # links to projects 
+    # Deploy live
+    # Add media back with git pull
+    # sync with live code

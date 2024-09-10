@@ -1,5 +1,5 @@
 /* Global Styles */
-
+/*SASS COMMAND: python manage.py sass devchris_app/static/scss/ devchris_app/static/css/ --watch */
 body {
   font-family: "Courier New", Courier, monospace;
   margin: 0;
@@ -455,6 +455,11 @@ figure img {
     flex-direction: column;
     // justify-content: flex;
   }
+}
+
+/*CKEDITOR*/
+.ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline.ck-focused {
+  background: black;
 }
 
 /* Responsiveness */
