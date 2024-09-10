@@ -206,7 +206,7 @@ EMAIL_HOST_PASSWORD= EMAIL_PW
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=True, cast=bool)
 if DEBUG:
     SECURE_CROSS_ORIGIN_OPENER_POLICY = None
     ALLOWED_HOSTS = ['192.168.1.55', '0.0.0.0', '127.0.0.1']
