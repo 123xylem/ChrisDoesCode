@@ -26,6 +26,8 @@ if settings.DEBUG:
 # //Low prio:
 # Add field for foreignKey Category for content on pages
 # Add captcha to email
+# One Url can handle 2 of the api calls (- my repo)
+# Add blog page for user signup and comments?
 
 #DONE ----------- Show image preview on upload
     #  ------------ Apply to all image fields ^
