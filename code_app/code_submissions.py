@@ -7,7 +7,7 @@ from django.utils import timezone
 
 logger = logging.getLogger(__name__)
 
-LEET_STATS_URL = config('LEET_STATS_URL')
+SUB_META_SOLVED = config('SUB_META_SOLVED')
 BEARER_TOKEN = config('BEARER_TOKEN')
 SUB_REPO_URL = config('SUB_REPO_URL')
 SUB_META_URL = config('SUB_META_URL')
@@ -124,17 +124,17 @@ def retrieveSubmissionMetaFromLeetCode() -> list[dict]:
 
 # Just stats on total solved
 def retrieveLeetMetaStats():
-    leetcode_summary = requests.get(LEET_STATS_URL)
+    leetcode_summary = requests.get(SUB_META_SOLVED)
     if leetcode_summary.status_code == 200:
         data = leetcode_summary.json() 
         prev_total = SubmissionMeta.objects.filter(pk=5).first().total_solved # access the one object holding my subStats
-        if 'totalSolved' in data and data['totalSolved'] > prev_total: 
+        if 'solvedProblem' in data and data['solvedProblem'] > prev_total: 
             try:
                 obj, created = SubmissionMeta.objects.update_or_create(
                     pk = 5,
-                    defaults={'total_solved': data['totalSolved'], 'easy_solved': data['easySolved'], 'medium_solved': data['mediumSolved'], 'hard_solved': data['hardSolved']},
+                    defaults={'total_solved': data['solvedProblem'], 'easy_solved': data['easySolved'], 'medium_solved': data['mediumSolved'], 'hard_solved': data['hardSolved']},
                 )
-                return ['Total Solved: ', data['totalSolved']]
+                return ['Total Solved: ', data['solvedProblem']]
 
             except Exception as e:
                 logger.error(f"Error updating leetcodeMeta: {e}")
