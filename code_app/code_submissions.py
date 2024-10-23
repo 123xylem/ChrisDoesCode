@@ -37,12 +37,9 @@ def addSubmissionsToDbOnMetaMatch(submissions:list):
     for q_a in submissions:
         for k, v in q_a.items():
             k = re.sub(r'^\d{1,5}\s*', '', k)
-            print(k, 'reged')
             k = ''.join([char for char in k if char.isalnum() or char == '-'])
-            print(k, 'alnum')
             # title = ' '.join([word.capitalize() for word in k.split('-')]).strip()
             title = ' '.join([word[0].upper() + word[1:] for word in k.replace('-', ' ').split()]).strip()
-            print(title, 'slugged')
 
             question = v[0].decode('utf-8')
             answer = v[1].decode('utf-8')
