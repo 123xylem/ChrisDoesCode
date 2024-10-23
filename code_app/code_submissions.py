@@ -3,7 +3,7 @@ import base64, requests, logging, time
 from .models import Submission, SubmissionMeta
 from datetime import datetime
 from django.utils import timezone
-# from .utils import *
+import re
 
 logger = logging.getLogger(__name__)
 
@@ -27,24 +27,34 @@ def getQaDataFromFiles(file_dir, filename):
         filename = 'solution.js'
         data = requests.get(subs_url+'/'+file_dir+'/'+filename, headers=headers)
     if data.status_code != 200:
-        logger.error(f"Error finding submission file in repo - not a .py or .js solution", exc_info=True)
+        logger.error(f"Error finding submission file {filename} in repo - not a .py or .js solution", exc_info=True)
     return data
 
 
-# Repo Sub Retrieval
+# Add Submission data to matching sub in db/site
+#TODO: Need to match title id instead as some titles have formatting that dont match 
 def addSubmissionsToDbOnMetaMatch(submissions:list):
     for q_a in submissions:
         for k, v in q_a.items():
-            k = ''.join([char for char in k if char.isalpha() or char == '-'])
-            title = ' '.join([word.capitalize() for word in k.split('-')]).strip()
+            k = re.sub(r'^\d{1,5}\s*', '', k)
+            print(k, 'reged')
+            k = ''.join([char for char in k if char.isalnum() or char == '-'])
+            print(k, 'alnum')
+            # title = ' '.join([word.capitalize() for word in k.split('-')]).strip()
+            title = ' '.join([word[0].upper() + word[1:] for word in k.replace('-', ' ').split()]).strip()
+            print(title, 'slugged')
+
             question = v[0].decode('utf-8')
             answer = v[1].decode('utf-8')
             submissions_to_update = Submission.objects.filter(title=title, needsUpdate=True)
+
+            logger.warning(f"are there subs to update?? {submissions_to_update} {title} ")
+
             # Check if any submissions are found
             if submissions_to_update.exists():
-                logger.info(f"Updating submission with title: {title}")
+                logger.warning(f"Updating submission with title: {title} array: {submissions_to_update}")
                 submissions_to_update.update(question=question, answer=answer, needsUpdate=False)
-
+                logger.warning(f"Updated: {submissions_to_update}")
 
 def retrieveQandAsFromSubmission(submission_folder_urls: list) -> list:
     q_and_as = []
@@ -90,10 +100,12 @@ def createSubmissionFromMeta(submissions_list:list):
                 Submission.objects.create(
                     title=fetched_title,
                     submitted_date=formatted_fetch_date
-                )   
+                )
                 logger.warning(f"{time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())} Created {fetched_title}")
 
             else: #Update if Submission date newer
+                # SUBDATE Always different!? logger.warning(f"{time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())} Found sub date vs new subdate for {fetched_title} {found_submission.submitted_date} {formatted_fetch_date}")
+
                 if found_submission.submitted_date != formatted_fetch_date:
                     found_submission.submitted_date = formatted_fetch_date
                     found_submission.needsUpdate = True
@@ -103,6 +115,7 @@ def createSubmissionFromMeta(submissions_list:list):
 
 def filterSubmissionMeta(submissions:list):
     filtered_submissions = [sub for sub in submissions if sub['statusDisplay'] == 'Accepted']
+    logger.info(f"{time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())}, FILTERED SUBS: { filtered_submissions } ", exc_info=True)
     for submission in filtered_submissions:
         submission['timestamp'] = datetime.fromtimestamp(int(submission['timestamp']))
 
@@ -113,7 +126,7 @@ def retrieveSubmissionMetaFromLeetCode() -> list[dict]:
     if leet_meta.status_code == 200:
         data = leet_meta.json()
         if 'submission' in data:
-            submissions = data['submission']     
+            submissions = data['submission']
             filterSubmissionMeta(submissions)
         else:
             logger.info(f"{time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())}, No Meta submissions in { data } ", exc_info=True)
@@ -126,9 +139,9 @@ def retrieveSubmissionMetaFromLeetCode() -> list[dict]:
 def retrieveLeetMetaStats():
     leetcode_summary = requests.get(SUB_META_SOLVED)
     if leetcode_summary.status_code == 200:
-        data = leetcode_summary.json() 
+        data = leetcode_summary.json()
         prev_total = SubmissionMeta.objects.filter(pk=5).first().total_solved # access the one object holding my subStats
-        if 'solvedProblem' in data and data['solvedProblem'] > prev_total: 
+        if 'solvedProblem' in data and data['solvedProblem'] > prev_total:
             try:
                 obj, created = SubmissionMeta.objects.update_or_create(
                     pk = 5,
